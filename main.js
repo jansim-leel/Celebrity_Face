@@ -68,14 +68,14 @@ const questionBanks = {
 };
 
 const results = [
-    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요." },
-    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요." },
-    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다." },
-    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!" },
-    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다." },
-    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!" },
-    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요." },
-    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!" }
+    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요.", tip: "조급해하지 마세요. 인연은 생각지도 못한 순간에 찾아온답니다.", color: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" },
+    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요.", tip: "가벼운 눈인사부터 시작해 보는 건 어떨까요?", color: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" },
+    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다.", tip: "함께 공감할 수 있는 관심사를 찾아보세요.", color: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)" },
+    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!", tip: "편안함 속에 설렘 한 스푼을 더해보세요.", color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
+    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다.", tip: "상대방의 작은 신호에 귀를 기울여 보세요.", color: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)" },
+    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!", tip: "당신의 진심을 보여줄 때가 다가오고 있어요.", color: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)" },
+    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요.", tip: "더 이상 고민하지 말고 먼저 손을 내밀어 보세요.", color: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)" },
+    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!", tip: "오늘 당장 보고 싶다고 말해보는 건 어떨까요?", color: "linear-gradient(135deg, #ff0844 0%, #ffb199 100%)" }
 ];
 
 let currentQuestions = [];
@@ -217,24 +217,29 @@ function calculateAndShowResult() {
     document.getElementById('result-level').innerText = `Lv. ${level}`;
     document.getElementById('result-desc').innerText = result.desc;
     document.getElementById('result-score').innerText = normalizedScore;
+    document.getElementById('vibe-tip-text').innerText = result.tip;
     
-    // Generate Cute Pixel Art Image (Two characters)
+    // Result Scene Setup
+    const scene = document.getElementById('result-scene');
+    scene.style.background = result.color;
+
     const mySeed = `my-${selectionData.myGender}-${selectionData.age}`;
     const targetSeed = `target-${selectionData.targetGender}-${selectionData.age}-${level}`;
     
-    // Using Dicebear for cute pixel art avatars
-    const myAvatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${mySeed}`;
-    const targetAvatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${targetSeed}`;
+    // Using Lorelei for very cute and expressive characters
+    const myAvatarUrl = `https://api.dicebear.com/7.x/lorelei/svg?seed=${mySeed}`;
+    const targetAvatarUrl = `https://api.dicebear.com/7.x/lorelei/svg?seed=${targetSeed}`;
     
-    // Display as a pair
-    const resultImgContainer = document.querySelector('.result-image');
-    resultImgContainer.innerHTML = `
+    const heartIcon = level > 4 ? '❤️' : (level > 2 ? '❓' : '❄️');
+
+    scene.innerHTML = `
+        <div class="vibe-badge">Today's Vibe</div>
+        <div class="heart-icon-overlay">${heartIcon}</div>
         <div class="pixel-pair">
             <div class="avatar-wrap">
                 <img src="${myAvatarUrl}" alt="나">
                 <span>나</span>
             </div>
-            <div class="heart-icon">${level > 4 ? '❤️' : (level > 2 ? '❓' : '❄️')}</div>
             <div class="avatar-wrap">
                 <img src="${targetAvatarUrl}" alt="그 사람">
                 <span>그 사람</span>
