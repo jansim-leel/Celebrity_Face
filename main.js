@@ -1,69 +1,113 @@
 const questionBanks = {
-    "teen": [
-        "학교나 학원에서 마주치면 먼저 아는 척을 하나요?",
-        "급식 시간에 내 주변에 앉으려고 하나요?",
-        "쉬는 시간마다 내 자리 근처로 오나요?",
-        "수업 시간에 몰래 쳐다보다가 눈이 마주친 적이 있나요?",
-        "수행평가나 숙제를 핑계로 연락을 하나요?",
-        "체육 시간이나 동아리 활동 때 나를 유독 챙겨주나요?",
-        "내 매점 심부름이나 소소한 부탁을 잘 들어주나요?",
-        "시험 기간에 같이 공부하자고 하거나 필기를 빌려달라고 하나요?",
-        "등하굣길에 우연히 마주치는 일이 잦은가요?",
-        "SNS 스토리나 게시물에 칼답이나 반응을 잘 해주나요?",
-        "나한테만 간식을 몰래 챙겨준 적이 있나요?",
-        "친구들이 우리 둘을 엮을 때 당황하거나 싫어하지 않나요?",
-        "내 이름이 들어간 별명을 부르며 장난을 치나요?",
-        "학원 끝나고 같이 가자고 기다린 적이 있나요?",
-        "내가 아플 때 진심으로 걱정하며 보건실에 가라고 하나요?",
+    "10s": [
+        "눈이 마주치면 피하거나, 반대로 빤히 쳐다보나요?",
+        "SNS 스토리나 게시물에 유독 반응이 빠르고 댓글을 자주 다나요?",
+        "사소한 장난을 치거나 나만 아는 별명으로 부르나요?",
+        "내가 있는 곳 근처에 우연인 척 자주 나타나나요?",
+        "시험 기간이나 휴일에도 '심심하다'며 먼저 연락을 하나요?",
+        "나에게만 간식이나 소소한 물건을 챙겨준 적이 있나요?",
+        "단둘이 게임을 하거나, 전화 통화를 길게 한 적이 있나요?",
+        "다른 친구와 있을 때보다 나랑 있을 때 더 텐션이 높거나 부끄러워하나요?",
+        "내가 좋아하는 아이돌, 유튜버 등에 관심을 보이며 말을 거나요?",
+        " '너 같은 친구 있으면 좋겠다'는 식의 뉘앙스를 풍기나요?",
         "내 프사가 바뀌면 바로 언급하거나 물어보나요?",
-        "방학 때도 심심하다며 먼저 선톡을 하나요?",
-        "자신이 좋아하는 아이돌이나 게임 이야기를 나에게만 공유하나요?",
-        "나랑 같은 반이나 팀이 되고 싶다는 말을 한 적이 있나요?",
-        "졸업 후에도 계속 연락하고 싶다는 뉘앙스를 풍기나요?"
+        "학원이나 방과 후에 같이 가자고 기다린 적이 있나요?",
+        "내가 아플 때 진심으로 걱정하며 DM이나 연락을 하나요?",
+        "자신이 좋아하는 노래나 영상을 나에게만 공유하나요?",
+        "나랑 같은 팀이나 조가 되고 싶다는 말을 한 적이 있나요?",
+        "졸업이나 종강 후에도 계속 연락하고 싶다는 말을 하나요?",
+        "내 주변 친구들에게 나의 평소 모습을 물어본 적이 있나요?",
+        "사람 많은 곳에서 나를 지켜주거나 챙겨주는 행동을 하나요?",
+        "나의 사소한 습관이나 특징을 따라하기도 하나요?",
+        "질투하는 듯한 반응을 보인 적이 있나요?"
     ],
-    "standard": [
-        "선톡(먼저 연락)이 자주 오나요?",
-        "눈이 마주치는 횟수가 평소보다 많은가요?",
-        "사소한 변화(머리 스타일, 옷 등)를 금방 알아채나요?",
-        "개인적인 고민이나 일상을 공유하나요?",
-        "나의 연락에 답장하는 속도가 빠른 편인가요?",
-        "나에 대해 궁금해하며 질문을 많이 하나요?",
-        "단둘이 만나자고 제안한 적이 있나요?",
-        "다른 사람보다 나에게 더 친절하다고 느끼나요?",
-        "SNS 게시물에 반응(좋아요, 댓글 등)을 잘 해주나요?",
-        "내가 좋아하는 음식이나 취미를 기억하고 있나요?",
-        "대화할 때 몸의 방향이 나를 향해 있나요?",
-        "별일 없어도 \"뭐해?\"라고 묻는 연락이 오나요?",
-        "은근슬쩍 가벼운 스킨십을 시도한 적이 있나요?",
-        "약속을 잡을 때 내 일정에 최대한 맞춰주나요?",
-        "우연히 마주치는 일이 자주 발생하나요?",
-        "나에게 칭찬을 자주 해주는 편인가요?",
-        "여러 명이 모인 자리에서 나를 유독 챙겨주나요?",
-        "헤어진 뒤에 집에 잘 들어갔는지 확인 연락을 하나요?",
-        "자신의 일상 사진을 나에게 보내주나요?",
-        "나에게 장난을 치거나 귀엽게 놀리나요?"
+    "20s": [
+        "늦은 밤이나 새벽에 개인적인 연락을 주고받나요?",
+        "자신의 일상 사진(오늘 먹은 음식, 풍경 등)을 먼저 보내주나요?",
+        " '단둘이' 술이나 커피를 마시자는 제안을 자연스럽게 하나요?",
+        "내가 예뻐 보이거나 멋져 보이는 날을 바로 알아채고 칭찬하나요?",
+        "나의 이상형이나 과거 연애 스타일에 대해 궁금해하며 물어보나요?",
+        "술자리나 모임에서 항상 내 옆자리나 근처에 앉으려 하나요?",
+        " '뭐해?'라는 연락이 특별한 용건 없이도 자주 오나요?",
+        "나의 취미나 관심사를 본인도 같이 해보고 싶어 하나요?",
+        "헤어질 때 '집에 도착하면 연락해'라며 걱정해 주나요?",
+        "대화 중에 은근슬쩍 가벼운 스킨십(손 크기 비교, 어깨 툭 등)이 있나요?",
+        "내가 추천한 영화나 전시회를 같이 보러 가자고 하나요?",
+        "바쁜 와중에도 답장 속도가 일관되게 빠른가요?",
+        "나의 SNS 게시물에 좋아요를 가장 먼저 누르거나 댓글을 다나요?",
+        "자신의 친한 친구들에게 나를 소개하거나 언급한 적이 있나요?",
+        "나의 사소한 변화(향수, 액세서리 등)를 금방 알아차리나요?",
+        "둘이서 찍은 사진을 개인 소장하거나 공유하고 싶어 하나요?",
+        "나에게만 유독 관대하거나 장난을 많이 치나요?",
+        "내가 좋아하는 취향의 장소를 미리 알아보고 같이 가자고 하나요?",
+        "미래의 특정 시점에 함께 무언가를 하자는 약속을 하나요?",
+        "대화가 끊기지 않게 질문을 계속 이어가려고 노력하나요?"
     ],
-    "mature": [
-        "퇴근 후나 주말에도 업무 외적인 연락이 오나요?",
-        "회식 자리에서 항상 내 근처에 앉으려고 하나요?",
-        "사적인 고민이나 커리어에 대한 진지한 대화를 나누나요?",
-        "내가 피곤해 보이면 커피나 간식을 챙겨주나요?",
-        "업무 중 실수를 했을 때 유독 나를 감싸주거나 도와주나요?",
-        "사석에서 따로 식사나 술 한잔하자고 제안하나요?",
-        "나의 사소한 취향(좋아하는 커피, 향기 등)을 기억하나요?",
-        "경조사나 특별한 날에 개인적으로 연락을 하나요?",
-        "나의 미래 계획이나 가치관에 대해 물어보나요?",
-        "다른 동료들에게는 엄격해도 나에게는 부드럽게 대하나요?",
-        "출장이나 외부 미팅 때 나랑 같이 가고 싶어 하나요?",
-        "사적인 자리에서 자신의 약점을 보여주기도 하나요?",
-        "내가 추천한 책이나 영화를 보고 후기를 남기나요?",
-        "말투에서 나를 존중하고 아끼는 게 느껴지나요?",
-        "연락할 때 이모티콘이나 부드러운 말투를 사용하나요?",
-        "나의 퇴근길이나 귀갓길을 걱정해 주나요?",
-        "본인의 가족이나 친한 친구 이야기를 들려주나요?",
-        "바쁜 와중에도 나의 연락에는 꼭 답장을 해주나요?",
-        "같이 있으면 시간이 금방 간다는 말을 한 적이 있나요?",
-        "내일 또 보자는 말이 단순히 인사처럼 들리지 않나요?"
+    "30s": [
+        "바쁜 일상 중에도 답장이 끊기지 않고 성의 있게 오나요?",
+        "자신의 미래 계획이나 인생 가치관에 대해 진지하게 이야기하나요?",
+        "내가 예전에 무심코 했던 작은 말들을 기억하고 챙겨주나요?",
+        "본인의 평소 생활 반경(단골집, 친한 친구 등)에 나를 노출시키나요?",
+        "피곤한 상황에서도 나를 만나기 위해 기꺼이 시간을 내나요?",
+        " '언제 한번 보자'가 아니라, 구체적인 날짜와 장소를 먼저 제안하나요?",
+        "나의 커리어나 고민에 대해 단순한 위로 이상의 실질적인 응원을 해주나요?",
+        "말투나 태도에서 나를 '존중받아야 할 한 사람'으로 대하는 게 느껴지나요?",
+        "자신의 약점이나 깊은 속마음을 나에게는 솔직하게 털어놓나요?",
+        " '우리'라는 단어를 써서 미래의 활동을 이야기한 적이 있나요?",
+        "갑작스러운 선물보다는 나에게 정말 필요한 것을 고민해서 주나요?",
+        "나의 가족이나 주변 사람들에 대해 조심스럽게 관심을 보이나요?",
+        "대화 중에 나의 눈을 피하지 않고 집중해서 들어주나요?",
+        "자신의 일과를 보고하듯 자연스럽게 공유하나요?",
+        "내가 아프거나 힘들 때 실질적인 도움을 주려고 노력하나요?",
+        "함께 있을 때 휴대폰을 거의 보지 않고 나에게 집중하나요?",
+        "본인의 경제적 상황이나 현실적인 부분들을 솔직히 말하나요?",
+        "나의 취향을 존중하며 본인의 스타일을 조금씩 맞추려 하나요?",
+        "갈등이 생겼을 때 회피하지 않고 성숙하게 대화로 풀려 하나요?",
+        "나를 만나는 것을 단순한 즐거움 이상의 가치로 여기는 것 같나요?"
+    ],
+    "40s": [
+        "화려한 데이트보다 나랑 대화하는 것 자체를 즐거워하는 게 느껴지나요?",
+        "나의 건강이나 컨디션을 세심하게 살피고 걱정해 주나요?",
+        "서로의 독립적인 생활을 존중하면서도 항상 연결되어 있다는 느낌을 주나요?",
+        "갑작스러운 변화보다 꾸준하고 일관된 태도로 나를 대하나요?",
+        "내가 힘들 때 묵묵히 내 편이 되어주고 든든한 버팀목이 되어주나요?",
+        "본인의 가족이나 소중한 사람들에 대한 이야기를 자연스럽게 들려주나요?",
+        "나의 사소한 취향(좋아하는 차, 음악 등)을 기억하고 배려해 주나요?",
+        "대화의 주제가 가벼운 농담을 넘어 삶의 깊은 통찰로 이어지나요?",
+        "함께 있을 때 억지로 무언가를 하지 않아도 마음이 편안한가요?",
+        " '고맙다', '고생했다'는 식의 따뜻한 감정 표현을 자주 하나요?",
+        "나의 삶의 방식이나 가치관을 있는 그대로 인정해 주나요?",
+        "본인의 바쁜 일정 속에서도 나의 존재를 항상 우선순위에 두나요?",
+        "특별한 날이 아니더라도 정성 어린 손편지나 메시지를 주나요?",
+        "우리의 관계가 장기적으로 지속되기를 바라는 마음을 내비치나요?",
+        "나의 작은 성취를 본인의 일처럼 진심으로 기뻐해 주나요?",
+        "함께 여행을 가거나 새로운 취미를 시작하자는 제안을 하나요?",
+        "말하기 어려운 고민도 나에게는 편안하게 털어놓나요?",
+        "나를 대할 때 배려심 깊은 행동들이 몸에 배어 있나요?",
+        "자신의 공간이나 삶의 중요한 부분에 나를 기꺼이 들여놓나요?",
+        "단순한 호감을 넘어 깊은 신뢰 관계를 형성하려 노력하나요?"
+    ],
+    "50s+": [
+        "비슷한 취미(산책, 여행, 운동 등)를 함께하며 시간을 보내고 싶어 하나요?",
+        "매일의 안부를 묻는 것이 습관처럼 자연스럽고 다정한가요?",
+        "서로의 자녀나 가족 문제를 이야기하며 조언을 구하거나 공감하나요?",
+        "맛있는 음식이나 좋은 곳을 보면 내 생각을 먼저 하나요?",
+        "나의 아픈 곳이나 건강 상태를 본인의 일처럼 신경 써주나요?",
+        "대화할 때 나의 의견을 끝까지 경청하고 존중해 주는 태도를 보이나요?",
+        " '남은 인생을 함께 즐겁게 보내고 싶다'는 뉘앙스를 전달하나요?",
+        "특별한 날이 아니어도 서로의 일상을 공유하는 것에 행복을 느끼나요?",
+        "나를 대할 때 긴장감보다는 깊은 신뢰와 편안함이 느껴지나요?",
+        "먼 곳으로의 여행이나 새로운 배움을 함께 하자고 제안하나요?",
+        "서로의 삶을 응원하며 긍정적인 에너지를 주고받나요?",
+        "소소한 일상의 기쁨을 나랑 함께 나눌 때 가장 행복해 보이나요?",
+        "나의 존재 자체가 본인에게 큰 힘이 된다고 말해주나요?",
+        "말하지 않아도 서로의 마음을 이해하는 듯한 눈빛을 보내나요?",
+        "앞으로의 삶에서 서로가 서로에게 든든한 동반자가 되길 원하나요?",
+        "함께 늙어가는 과정에 대해 따뜻하고 희망적으로 이야기하나요?",
+        "나의 사소한 도움에도 진심으로 감사하며 보답하려 하나요?",
+        "자연 속에서의 여유나 조용한 시간을 나랑 공유하고 싶어 하나요?",
+        "서로의 상처나 과거를 보듬어주는 성숙한 태도를 보이나요?",
+        "지금 이 순간, 함께 있는 시간의 소중함을 자주 표현하나요?"
     ]
 };
 
@@ -106,10 +150,7 @@ startBtn.addEventListener('click', () => {
         return;
     }
     selectionData.age = document.getElementById('age-range').value;
-    
-    if (selectionData.age === '10s') currentQuestions = questionBanks.teen;
-    else if (selectionData.age === '20s') currentQuestions = questionBanks.standard;
-    else currentQuestions = questionBanks.mature;
+    currentQuestions = questionBanks[selectionData.age] || questionBanks["20s"];
 
     userAnswers = new Array(currentQuestions.length).fill(null);
     currentPage = 0;
@@ -173,185 +214,74 @@ function processResult() {
     setTimeout(calculateAndShowResult, 5000);
 }
 
+// 픽셀 아트 엔진 (고해상도 1px 단위 렌더링)
+function generateMiniMe(gender, age, level, isTarget) {
+    const colors = getAgePalette(age, gender, isTarget);
+    const mood = getSceneMood(level);
+    const facing = isTarget ? mood.targetTurn : mood.myTurn;
+    const flip = facing < 0 ? 'scaleX(-1)' : 'scaleX(1)';
+    
+    // 64x64 정밀 그리드 기반 픽셀 렌더링
+    // 싸이월드/바람의나라 스타일을 위해 1px 단위 rect 활용
+    return `
+    <svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: ${flip}">
+        <!-- 그림자 -->
+        <ellipse cx="32" cy="78" rx="16" ry="4" fill="rgba(0,0,0,0.1)"/>
+        
+        <!-- 몸체 외곽선 및 채색 (추후 정교한 좌표 데이터로 대체) -->
+        <g class="mini-body">
+            <!-- 하체 -->
+            <rect x="24" y="60" width="16" height="18" fill="${colors.bottom}"/>
+            <rect x="23" y="60" width="1" height="17" fill="${colors.outline}"/>
+            <rect x="40" y="60" width="1" height="17" fill="${colors.outline}"/>
+            
+            <!-- 상체 -->
+            <rect x="20" y="42" width="24" height="20" fill="${colors.top}"/>
+            <rect x="19" y="42" width="1" height="19" fill="${colors.outline}"/>
+            <rect x="44" y="42" width="1" height="19" fill="${colors.outline}"/>
+            
+            <!-- 머리 및 얼굴 -->
+            <rect x="20" y="16" width="24" height="26" fill="${colors.skin}"/>
+            <rect x="19" y="18" width="1" height="22" fill="${colors.outline}"/>
+            <rect x="44" y="18" width="1" height="22" fill="${colors.outline}"/>
+            <rect x="22" y="14" width="20" height="2" fill="${colors.outline}"/>
+            
+            <!-- 눈코입 (1px 디테일) -->
+            <rect x="26" y="28" width="2" height="3" fill="${colors.outline}"/>
+            <rect x="36" y="28" width="2" height="3" fill="${colors.outline}"/>
+            <rect x="30" y="36" width="4" height="1" fill="${colors.outline}"/>
+            
+            <!-- 머리카락 -->
+            <rect x="18" y="12" width="28" height="12" fill="${colors.hair}"/>
+            ${gender === 'female' ? `<rect x="17" y="24" width="4" height="20" fill="${colors.hair}"/>
+                                     <rect x="43" y="24" width="4" height="20" fill="${colors.hair}"/>` : ''}
+        </g>
+    </svg>`;
+}
+
 function getAgePalette(age, gender, isTarget) {
-    const base = {
-        skin: "#f5c7a6",
-        outline: "#4a3027",
-        cheek: "#ef8f8f",
-        shoe: "#3d302f"
-    };
-
     const palettes = {
-        "10s": {
-            hair: gender === "female" ? "#34221f" : "#2d2523",
-            top: isTarget ? "#8dc6ff" : "#f28da8",
-            bottom: gender === "female" ? "#4b6fb3" : "#30436f",
-            accent: "#fff3a6"
-        },
-        "20s": {
-            hair: gender === "female" ? "#5b3528" : "#3d2a24",
-            top: isTarget ? "#67b7a5" : "#f08f73",
-            bottom: gender === "female" ? "#6f5aa8" : "#435f8a",
-            accent: "#ffe1ad"
-        },
-        "30s": {
-            hair: gender === "female" ? "#45312b" : "#322823",
-            top: isTarget ? "#6d8fb7" : "#d48791",
-            bottom: "#35445f",
-            accent: "#f6ead7"
-        },
-        "40s": {
-            hair: gender === "female" ? "#3b302d" : "#2d2927",
-            top: isTarget ? "#809672" : "#b47868",
-            bottom: "#3e3d55",
-            accent: "#eadbc8"
-        },
-        "50s+": {
-            hair: gender === "female" ? "#b8b1a8" : "#aaa39b",
-            top: isTarget ? "#7895a4" : "#b9878e",
-            bottom: "#4e5061",
-            accent: "#f2e6d2"
-        }
+        "10s": { hair: "#2d2523", top: "#8dc6ff", bottom: "#30436f", skin: "#f5c7a6", outline: "#3a2a24" },
+        "20s": { hair: "#5b3528", top: "#67b7a5", bottom: "#435f8a", skin: "#f6ccae", outline: "#3a2a24" },
+        "30s": { hair: "#45312b", top: "#6d8fb7", bottom: "#35445f", skin: "#f7d1b5", outline: "#2a1f1b" },
+        "40s": { hair: "#3b302d", top: "#809672", bottom: "#3e3d55", skin: "#f8d5bc", outline: "#2a1f1b" },
+        "50s+": { hair: "#b8b1a8", top: "#7895a4", bottom: "#4e5061", skin: "#f9d9c3", outline: "#2a1f1b" }
     };
-
-    return { ...base, ...palettes[age] };
+    return palettes[age] || palettes["20s"];
 }
 
 function getSceneMood(level) {
     const moods = [
-        { face: "shy", pose: "apart", distance: 82, myTurn: -1, targetTurn: 1, note: "두 사람은 아직 서로 다른 곳을 보며 조심스럽게 거리를 두고 있어요.", icon: "cloud" },
-        { face: "calm", pose: "wave", distance: 68, myTurn: 1, targetTurn: -1, note: "가볍게 인사할 수 있는 사이처럼, 작은 눈인사가 먼저 보이는 장면이에요.", icon: "spark" },
-        { face: "calm", pose: "chat", distance: 56, myTurn: 1, targetTurn: -1, note: "어색함은 줄었지만 아직은 편안한 지인처럼 나란히 서 있어요.", icon: "chat" },
-        { face: "smile", pose: "chat", distance: 42, myTurn: 1, targetTurn: -1, note: "둘 다 편하게 웃으며 대화하는 친구 같은 분위기로 가까워졌어요.", icon: "chat" },
-        { face: "shySmile", pose: "bashful", distance: 30, myTurn: 1, targetTurn: -1, note: "서로를 의식하며 볼이 살짝 붉어진, 미묘한 설렘이 흐르는 모습이에요.", icon: "spark" },
-        { face: "happy", pose: "gift", distance: 18, myTurn: 1, targetTurn: -1, note: "한쪽이 작은 마음을 건네고, 다른 한쪽은 설레는 표정으로 받아들이는 장면이에요.", icon: "heart" },
-        { face: "happy", pose: "hand", distance: 7, myTurn: 1, targetTurn: -1, note: "두 사람이 거의 맞닿아 서서 손을 내미는, 확실한 그린라이트 장면이에요.", icon: "hearts" },
-        { face: "love", pose: "couple", distance: 0, myTurn: 1, targetTurn: -1, note: "이미 연인처럼 가까이 붙어 하트를 띄우는, 따뜻한 커플 미니미 모습이에요.", icon: "hearts" }
+        { face: "shy", pose: "apart", distance: 100, myTurn: -1, targetTurn: 1, note: "아직은 서로 멀리서 지켜보는 단계예요.", icon: "cloud" },
+        { face: "calm", pose: "wave", distance: 80, myTurn: 1, targetTurn: -1, note: "가벼운 인사를 나눌 수 있는 지인 사이!", icon: "spark" },
+        { face: "calm", pose: "chat", distance: 60, myTurn: 1, targetTurn: -1, note: "조금씩 대화가 이어지는 편안한 사이예요.", icon: "chat" },
+        { face: "smile", pose: "chat", distance: 40, myTurn: 1, targetTurn: -1, note: "웃음이 끊이지 않는 즐거운 대화가 오가네요.", icon: "chat" },
+        { face: "shySmile", pose: "bashful", distance: 25, myTurn: 1, targetTurn: -1, note: "서로를 의식하기 시작한 미묘한 설렘!", icon: "spark" },
+        { face: "happy", pose: "gift", distance: 15, myTurn: 1, targetTurn: -1, note: "진심을 담은 작은 신호들이 오가고 있어요.", icon: "heart" },
+        { face: "happy", pose: "hand", distance: 5, myTurn: 1, targetTurn: -1, note: "누가 봐도 확실한 호감, 곧 좋은 소식이 들리겠네요!", icon: "hearts" },
+        { face: "love", pose: "couple", distance: 0, myTurn: 1, targetTurn: -1, note: "이미 서로의 마음속에 깊이 자리 잡은 두 사람.", icon: "hearts" }
     ];
-
     return moods[level];
-}
-
-function pixelIcon(type) {
-    const icons = {
-        cloud: `
-            <rect x="16" y="24" width="28" height="8" fill="#ffffff" opacity=".75"/>
-            <rect x="24" y="18" width="18" height="8" fill="#ffffff" opacity=".75"/>
-            <rect x="122" y="34" width="24" height="8" fill="#ffffff" opacity=".65"/>
-            <rect x="132" y="28" width="14" height="8" fill="#ffffff" opacity=".65"/>`,
-        spark: `
-            <rect x="34" y="28" width="4" height="12" fill="#ffe681"/>
-            <rect x="30" y="32" width="12" height="4" fill="#ffe681"/>
-            <rect x="128" y="24" width="4" height="10" fill="#fff1a8"/>
-            <rect x="125" y="27" width="10" height="4" fill="#fff1a8"/>`,
-        chat: `
-            <rect x="72" y="22" width="26" height="14" fill="#fffaf0"/>
-            <rect x="78" y="36" width="6" height="4" fill="#fffaf0"/>
-            <rect x="78" y="28" width="4" height="3" fill="#d7bfa7"/>
-            <rect x="86" y="28" width="4" height="3" fill="#d7bfa7"/>`,
-        heart: `
-            <rect x="80" y="24" width="8" height="8" fill="#ff6f91"/>
-            <rect x="92" y="24" width="8" height="8" fill="#ff6f91"/>
-            <rect x="76" y="32" width="28" height="8" fill="#ff6f91"/>
-            <rect x="80" y="40" width="20" height="8" fill="#ff6f91"/>
-            <rect x="88" y="48" width="8" height="8" fill="#ff6f91"/>`,
-        hearts: `
-            <rect x="74" y="18" width="6" height="6" fill="#ff6f91"/>
-            <rect x="84" y="18" width="6" height="6" fill="#ff6f91"/>
-            <rect x="70" y="24" width="24" height="6" fill="#ff6f91"/>
-            <rect x="76" y="30" width="12" height="6" fill="#ff6f91"/>
-            <rect x="100" y="30" width="5" height="5" fill="#f7a7bc"/>
-            <rect x="108" y="30" width="5" height="5" fill="#f7a7bc"/>
-            <rect x="97" y="35" width="19" height="5" fill="#f7a7bc"/>
-            <rect x="102" y="40" width="9" height="5" fill="#f7a7bc"/>`
-    };
-
-    return icons[type] || "";
-}
-
-function generatePixelPerson(gender, age, level, isTarget) {
-    const colors = getAgePalette(age, gender, isTarget);
-    const mood = getSceneMood(level);
-    const face = mood.face;
-    const feminine = gender === "female";
-    const older = age === "50s+" || age === "40s";
-    const teen = age === "10s";
-    const facing = isTarget ? mood.targetTurn : mood.myTurn;
-    const flip = facing < 0 ? ` transform="translate(48 0) scale(-1 1)"` : "";
-    const hairSide = feminine ? `
-        <rect x="8" y="18" width="5" height="18" fill="${colors.hair}"/>
-        <rect x="35" y="18" width="5" height="18" fill="${colors.hair}"/>
-        <rect x="10" y="34" width="4" height="10" fill="${colors.hair}"/>
-        <rect x="34" y="34" width="4" height="10" fill="${colors.hair}"/>` : `
-        <rect x="11" y="14" width="6" height="6" fill="${colors.hair}"/>
-        <rect x="31" y="14" width="5" height="6" fill="${colors.hair}"/>`;
-    const hairTop = older ? `
-        <rect x="14" y="9" width="20" height="5" fill="#d1cbc3"/>
-        <rect x="10" y="14" width="28" height="8" fill="${colors.hair}"/>` : `
-        <rect x="13" y="8" width="22" height="6" fill="${colors.hair}"/>
-        <rect x="10" y="13" width="28" height="9" fill="${colors.hair}"/>
-        <rect x="9" y="19" width="7" height="6" fill="${colors.hair}"/>`;
-
-    const mouth = {
-        shy: `<rect x="21" y="31" width="6" height="2" fill="${colors.outline}"/>`,
-        calm: `<rect x="20" y="31" width="8" height="2" fill="${colors.outline}"/>`,
-        smile: `<rect x="18" y="30" width="3" height="2" fill="${colors.outline}"/><rect x="21" y="32" width="8" height="2" fill="${colors.outline}"/><rect x="29" y="30" width="3" height="2" fill="${colors.outline}"/>`,
-        shySmile: `<rect x="19" y="31" width="3" height="2" fill="${colors.outline}"/><rect x="22" y="33" width="6" height="2" fill="${colors.outline}"/><rect x="28" y="31" width="3" height="2" fill="${colors.outline}"/>`,
-        happy: `<rect x="18" y="30" width="4" height="2" fill="${colors.outline}"/><rect x="22" y="32" width="8" height="2" fill="${colors.outline}"/><rect x="30" y="30" width="4" height="2" fill="${colors.outline}"/>`,
-        love: `<rect x="19" y="31" width="4" height="3" fill="#d94f68"/><rect x="26" y="31" width="4" height="3" fill="#d94f68"/>`
-    }[face];
-
-    const blush = level >= 4 ? `
-        <rect x="12" y="29" width="5" height="3" fill="${colors.cheek}" opacity=".72"/>
-        <rect x="31" y="29" width="5" height="3" fill="${colors.cheek}" opacity=".72"/>` : "";
-    const skirt = feminine && age !== "30s" && age !== "40s" ? `
-        <rect x="13" y="47" width="22" height="6" fill="${colors.bottom}"/>
-        <rect x="11" y="53" width="26" height="5" fill="${colors.bottom}"/>` : `
-        <rect x="14" y="47" width="20" height="6" fill="${colors.bottom}"/>`;
-    const legs = feminine && age !== "30s" && age !== "40s" ? `
-        <rect x="16" y="58" width="5" height="12" fill="${colors.skin}"/>
-        <rect x="27" y="58" width="5" height="12" fill="${colors.skin}"/>` : `
-        <rect x="15" y="53" width="7" height="17" fill="${colors.bottom}"/>
-        <rect x="26" y="53" width="7" height="17" fill="${colors.bottom}"/>`;
-    const outfitDetail = teen ? `
-        <rect x="13" y="42" width="22" height="3" fill="${colors.accent}"/>
-        <rect x="9" y="47" width="4" height="8" fill="#8d6e63"/>` : `
-        <rect x="22" y="39" width="4" height="12" fill="${colors.accent}"/>`;
-
-    let arms = `
-        <rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/>
-        <rect x="35" y="40" width="5" height="18" fill="${colors.skin}"/>`;
-    if (mood.pose === "wave" && isTarget) {
-        arms = `<rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/><rect x="35" y="34" width="5" height="16" fill="${colors.skin}"/><rect x="38" y="31" width="5" height="5" fill="${colors.skin}"/>`;
-    } else if (mood.pose === "gift" && !isTarget) {
-        arms = `<rect x="8" y="41" width="5" height="16" fill="${colors.skin}"/><rect x="34" y="42" width="8" height="5" fill="${colors.skin}"/><rect x="39" y="39" width="6" height="6" fill="#ff6f91"/>`;
-    } else if (mood.pose === "hand" || mood.pose === "couple") {
-        arms = `<rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/><rect x="34" y="43" width="12" height="5" fill="${colors.skin}"/>`;
-    }
-
-    return `
-    <svg viewBox="0 0 48 76" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
-        <g${flip}>
-            <rect x="14" y="10" width="20" height="2" fill="${colors.outline}" opacity=".24"/>
-            ${hairTop}
-            ${hairSide}
-            <rect x="12" y="18" width="24" height="20" fill="${colors.skin}"/>
-            <rect x="15" y="21" width="18" height="4" fill="${colors.skin}" opacity=".55"/>
-            <rect x="17" y="26" width="4" height="4" fill="${colors.outline}"/>
-            <rect x="28" y="26" width="4" height="4" fill="${colors.outline}"/>
-            ${mouth}
-            ${blush}
-            <rect x="13" y="37" width="22" height="13" fill="${colors.top}"/>
-            <rect x="11" y="39" width="4" height="10" fill="${colors.top}"/>
-            <rect x="33" y="39" width="4" height="10" fill="${colors.top}"/>
-            ${outfitDetail}
-            ${arms}
-            ${skirt}
-            ${legs}
-            <rect x="13" y="70" width="11" height="4" fill="${colors.shoe}"/>
-            <rect x="25" y="70" width="11" height="4" fill="${colors.shoe}"/>
-        </g>
-    </svg>`;
 }
 
 function calculateAndShowResult() {
@@ -377,31 +307,35 @@ function calculateAndShowResult() {
     
     const scene = document.getElementById('result-scene');
     const mood = getSceneMood(level);
-    scene.className = `result-scene result-scene-level-${level}`;
     
+    // 미니룸 스타일 배경 생성
     scene.innerHTML = `
-        <div class="pixel-sky" aria-hidden="true">
-            <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-                ${pixelIcon(mood.icon)}
-                <rect x="0" y="88" width="180" height="32" fill="rgba(255,255,255,.34)"/>
-                <rect x="0" y="94" width="180" height="4" fill="rgba(94,72,61,.18)"/>
-            </svg>
-        </div>
-        <div class="minimi-stage">
-            <div class="minimi-wrap minimi-me" style="transform: translateX(-${mood.distance}px)">
-                <div class="minimi-svg">${generatePixelPerson(selectionData.myGender, selectionData.age, level, false)}</div>
-                <div class="minimi-name">나</div>
-            </div>
-            <div class="minimi-wrap minimi-target" style="transform: translateX(${mood.distance}px)">
-                <div class="minimi-svg">${generatePixelPerson(selectionData.targetGender, selectionData.age, level, true)}</div>
-                <div class="minimi-name">그 사람</div>
+        <div class="mini-room" style="background: #f0e6d6; border: 4px solid #c9b9a5; position: relative; height: 180px; overflow: hidden; image-rendering: pixelated;">
+            <div class="room-floor" style="position: absolute; bottom: 0; width: 100%; height: 60px; background: #e2d3bc; border-top: 2px solid #c9b9a5;"></div>
+            <div class="room-window" style="position: absolute; top: 20px; right: 30px; width: 40px; height: 50px; background: #fff; border: 2px solid #c9b9a5; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);"></div>
+            
+            <div class="minimi-stage" style="position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; align-items: flex-end;">
+                <div class="minimi-wrap" style="transform: translateX(-${mood.distance}px)">
+                    ${generateMiniMe(selectionData.myGender, selectionData.age, level, false)}
+                </div>
+                <div class="minimi-wrap" style="transform: translateX(${mood.distance}px)">
+                    ${generateMiniMe(selectionData.targetGender, selectionData.age, level, true)}
+                </div>
             </div>
         </div>
-        <p class="scene-note">${mood.note}</p>
+        <p class="scene-note" style="margin-top: 15px; font-size: 0.9rem; color: #666;">${mood.note}</p>
     `;
 
     showPage('result-page');
 }
+
+restartBtn.addEventListener('click', () => {
+    currentPage = 0; userAnswers = [];
+    selectionData = { myGender: null, targetGender: null, age: '20s' };
+    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    showPage('landing-page');
+});
+
 
 restartBtn.addEventListener('click', () => {
     currentPage = 0; userAnswers = [];
