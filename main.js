@@ -214,60 +214,106 @@ function processResult() {
     setTimeout(calculateAndShowResult, 5000);
 }
 
-// 픽셀 아트 엔진 (고해상도 1px 단위 렌더링)
+// 픽셀 아트 엔진 (초정밀 1px 단위 렌더링)
 function generateMiniMe(gender, age, level, isTarget) {
     const colors = getAgePalette(age, gender, isTarget);
     const mood = getSceneMood(level);
     const facing = isTarget ? mood.targetTurn : mood.myTurn;
     const flip = facing < 0 ? 'scaleX(-1)' : 'scaleX(1)';
     
-    // 64x64 정밀 그리드 기반 픽셀 렌더링
-    // 싸이월드/바람의나라 스타일을 위해 1px 단위 rect 활용
+    // 싸이월드/바람의나라 스타일: 1px 외곽선 + 3단 명암 + 정교한 눈코입
+    // viewBox를 40x60으로 설정하여 1단위가 실제 1픽셀처럼 보이게 함
     return `
-    <svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: ${flip}">
+    <svg viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: ${flip}; width: 100%; height: 100%;">
         <!-- 그림자 -->
-        <ellipse cx="32" cy="78" rx="16" ry="4" fill="rgba(0,0,0,0.1)"/>
+        <ellipse cx="20" cy="56" rx="10" ry="2" fill="rgba(0,0,0,0.1)"/>
         
-        <!-- 몸체 외곽선 및 채색 (추후 정교한 좌표 데이터로 대체) -->
-        <g class="mini-body">
-            <!-- 하체 -->
-            <rect x="24" y="60" width="16" height="18" fill="${colors.bottom}"/>
-            <rect x="23" y="60" width="1" height="17" fill="${colors.outline}"/>
-            <rect x="40" y="60" width="1" height="17" fill="${colors.outline}"/>
+        <g class="mini-character">
+            <!-- 하체 (바지/치마) -->
+            <rect x="14" y="42" width="12" height="12" fill="${colors.bottom}"/>
+            <rect x="13" y="42" width="1" height="11" fill="${colors.outline}"/>
+            <rect x="26" y="42" width="1" height="11" fill="${colors.outline}"/>
+            <rect x="14" y="53" width="12" height="1" fill="${colors.outline}"/>
+            <!-- 다리 구분선 -->
+            <rect x="19" y="46" width="2" height="8" fill="${colors.outline}" opacity="0.3"/>
+
+            <!-- 상체 (옷) -->
+            <rect x="12" y="30" width="16" height="13" fill="${colors.top}"/>
+            <rect x="12" y="30" width="16" height="2" fill="white" opacity="0.2"/> <!-- 하이라이트 -->
+            <rect x="11" y="31" width="1" height="12" fill="${colors.outline}"/>
+            <rect x="28" y="31" width="1" height="12" fill="${colors.outline}"/>
+            <rect x="12" y="42" width="16" height="1" fill="${colors.outline}"/>
             
-            <!-- 상체 -->
-            <rect x="20" y="42" width="24" height="20" fill="${colors.top}"/>
-            <rect x="19" y="42" width="1" height="19" fill="${colors.outline}"/>
-            <rect x="44" y="42" width="1" height="19" fill="${colors.outline}"/>
+            <!-- 팔 -->
+            <rect x="8" y="31" width="3" height="10" fill="${colors.skin}"/>
+            <rect x="7" y="31" width="1" height="10" fill="${colors.outline}"/>
+            <rect x="29" y="31" width="3" height="10" fill="${colors.skin}"/>
+            <rect x="32" y="31" width="1" height="10" fill="${colors.outline}"/>
+
+            <!-- 머리 (얼굴) -->
+            <rect x="12" y="10" width="16" height="20" fill="${colors.skin}"/>
+            <!-- 얼굴 굴곡/명암 -->
+            <rect x="12" y="26" width="16" height="4" fill="black" opacity="0.05"/>
+            <!-- 외곽선 -->
+            <rect x="11" y="12" width="1" height="18" fill="${colors.outline}"/>
+            <rect x="28" y="12" width="1" height="18" fill="${colors.outline}"/>
+            <rect x="12" y="29" width="16" height="1" fill="${colors.outline}"/>
             
-            <!-- 머리 및 얼굴 -->
-            <rect x="20" y="16" width="24" height="26" fill="${colors.skin}"/>
-            <rect x="19" y="18" width="1" height="22" fill="${colors.outline}"/>
-            <rect x="44" y="18" width="1" height="22" fill="${colors.outline}"/>
-            <rect x="22" y="14" width="20" height="2" fill="${colors.outline}"/>
+            <!-- 정교한 눈 (싸이월드 스타일) -->
+            <g class="eyes">
+                <rect x="16" y="19" width="2" height="3" fill="${colors.outline}"/>
+                <rect x="16" y="19" width="1" height="1" fill="white" opacity="0.8"/> <!-- 눈동자 광택 -->
+                <rect x="22" y="19" width="2" height="3" fill="${colors.outline}"/>
+                <rect x="22" y="19" width="1" height="1" fill="white" opacity="0.8"/>
+            </g>
             
-            <!-- 눈코입 (1px 디테일) -->
-            <rect x="26" y="28" width="2" height="3" fill="${colors.outline}"/>
-            <rect x="36" y="28" width="2" height="3" fill="${colors.outline}"/>
-            <rect x="30" y="36" width="4" height="1" fill="${colors.outline}"/>
-            
-            <!-- 머리카락 -->
-            <rect x="18" y="12" width="28" height="12" fill="${colors.hair}"/>
-            ${gender === 'female' ? `<rect x="17" y="24" width="4" height="20" fill="${colors.hair}"/>
-                                     <rect x="43" y="24" width="4" height="20" fill="${colors.hair}"/>` : ''}
+            <!-- 코와 입 -->
+            <rect x="19" y="23" width="2" height="1" fill="${colors.outline}" opacity="0.2"/>
+            <rect x="18" y="26" width="4" height="1" fill="${colors.outline}" opacity="0.5"/>
+
+            <!-- 머리카락 (스타일별 차별화) -->
+            <g class="hair">
+                <rect x="10" y="8" width="20" height="8" fill="${colors.hair}"/>
+                <rect x="11" y="7" width="18" height="1" fill="${colors.hair}"/>
+                <rect x="13" y="6" width="14" height="1" fill="${colors.hair}"/>
+                <!-- 머릿결 디테일 -->
+                <rect x="12" y="8" width="16" height="1" fill="white" opacity="0.1"/>
+                ${gender === 'female' ? `
+                    <rect x="10" y="16" width="3" height="18" fill="${colors.hair}"/>
+                    <rect x="27" y="16" width="3" height="18" fill="${colors.hair}"/>
+                    <rect x="9" y="16" width="1" height="17" fill="${colors.outline}"/>
+                    <rect x="30" y="16" width="1" height="17" fill="${colors.outline}"/>
+                ` : `
+                    <rect x="10" y="12" width="2" height="4" fill="${colors.hair}"/>
+                    <rect x="28" y="12" width="2" height="4" fill="${colors.hair}"/>
+                `}
+                <!-- 상단 외곽선 -->
+                <rect x="13" y="5" width="14" height="1" fill="${colors.outline}"/>
+            </g>
+
+            <!-- 홍조 (호감도에 따라) -->
+            ${level >= 4 ? `
+                <rect x="13" y="22" width="2" height="1" fill="#ffb6c1" opacity="0.8"/>
+                <rect x="25" y="22" width="2" height="1" fill="#ffb6c1" opacity="0.8"/>
+            ` : ''}
         </g>
     </svg>`;
 }
 
 function getAgePalette(age, gender, isTarget) {
     const palettes = {
-        "10s": { hair: "#2d2523", top: "#8dc6ff", bottom: "#30436f", skin: "#f5c7a6", outline: "#3a2a24" },
-        "20s": { hair: "#5b3528", top: "#67b7a5", bottom: "#435f8a", skin: "#f6ccae", outline: "#3a2a24" },
-        "30s": { hair: "#45312b", top: "#6d8fb7", bottom: "#35445f", skin: "#f7d1b5", outline: "#2a1f1b" },
-        "40s": { hair: "#3b302d", top: "#809672", bottom: "#3e3d55", skin: "#f8d5bc", outline: "#2a1f1b" },
-        "50s+": { hair: "#b8b1a8", top: "#7895a4", bottom: "#4e5061", skin: "#f9d9c3", outline: "#2a1f1b" }
+        "10s": { hair: "#3a2a24", top: "#a5d8ff", bottom: "#4c6ef5", skin: "#ffe3d5", outline: "#2b1d18" },
+        "20s": { hair: "#4d3a31", top: "#63e6be", bottom: "#5c7cfa", skin: "#fff0e6", outline: "#1f1512" },
+        "30s": { hair: "#2b1d18", top: "#ffadad", bottom: "#495057", skin: "#fff5f0", outline: "#1a110e" },
+        "40s": { hair: "#1a110e", top: "#ffd8a8", bottom: "#343a40", skin: "#fff9f5", outline: "#000000" },
+        "50s+": { hair: "#495057", top: "#d0ebff", bottom: "#212529", skin: "#ffffff", outline: "#000000" }
     };
-    return palettes[age] || palettes["20s"];
+    const p = palettes[age] || palettes["20s"];
+    // 타겟일 경우 색상을 약간 다르게 (구분용)
+    if (isTarget) {
+        return { ...p, top: gender === 'female' ? '#ffc9c9' : '#a5d8ff' };
+    }
+    return p;
 }
 
 function getSceneMood(level) {
