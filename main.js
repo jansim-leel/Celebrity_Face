@@ -173,37 +173,184 @@ function processResult() {
     setTimeout(calculateAndShowResult, 5000);
 }
 
-function generateMinimiSVG(gender, age, level, isTarget) {
-    // Colors based on gender/age
-    const skinColor = "#ffdbac";
-    const hairColor = age === '50s+' ? "#aaaaaa" : (age === '10s' ? "#000000" : "#4b2c20");
-    const shirtColor = gender === 'male' ? "#3498db" : "#e74c3c";
-    const pantsColor = gender === 'male' ? "#2c3e50" : "#f1c40f";
-    
-    // Emotion: Blush if level is high
-    const showBlush = level >= 5;
-    const smileType = level >= 5 ? "smile" : (level >= 3 ? "neutral" : "sad");
+function getAgePalette(age, gender, isTarget) {
+    const base = {
+        skin: "#f5c7a6",
+        outline: "#4a3027",
+        cheek: "#ef8f8f",
+        shoe: "#3d302f"
+    };
+
+    const palettes = {
+        "10s": {
+            hair: gender === "female" ? "#34221f" : "#2d2523",
+            top: isTarget ? "#8dc6ff" : "#f28da8",
+            bottom: gender === "female" ? "#4b6fb3" : "#30436f",
+            accent: "#fff3a6"
+        },
+        "20s": {
+            hair: gender === "female" ? "#5b3528" : "#3d2a24",
+            top: isTarget ? "#67b7a5" : "#f08f73",
+            bottom: gender === "female" ? "#6f5aa8" : "#435f8a",
+            accent: "#ffe1ad"
+        },
+        "30s": {
+            hair: gender === "female" ? "#45312b" : "#322823",
+            top: isTarget ? "#6d8fb7" : "#d48791",
+            bottom: "#35445f",
+            accent: "#f6ead7"
+        },
+        "40s": {
+            hair: gender === "female" ? "#3b302d" : "#2d2927",
+            top: isTarget ? "#809672" : "#b47868",
+            bottom: "#3e3d55",
+            accent: "#eadbc8"
+        },
+        "50s+": {
+            hair: gender === "female" ? "#b8b1a8" : "#aaa39b",
+            top: isTarget ? "#7895a4" : "#b9878e",
+            bottom: "#4e5061",
+            accent: "#f2e6d2"
+        }
+    };
+
+    return { ...base, ...palettes[age] };
+}
+
+function getSceneMood(level) {
+    const moods = [
+        { face: "shy", pose: "apart", distance: 82, myTurn: -1, targetTurn: 1, note: "두 사람은 아직 서로 다른 곳을 보며 조심스럽게 거리를 두고 있어요.", icon: "cloud" },
+        { face: "calm", pose: "wave", distance: 68, myTurn: 1, targetTurn: -1, note: "가볍게 인사할 수 있는 사이처럼, 작은 눈인사가 먼저 보이는 장면이에요.", icon: "spark" },
+        { face: "calm", pose: "chat", distance: 56, myTurn: 1, targetTurn: -1, note: "어색함은 줄었지만 아직은 편안한 지인처럼 나란히 서 있어요.", icon: "chat" },
+        { face: "smile", pose: "chat", distance: 42, myTurn: 1, targetTurn: -1, note: "둘 다 편하게 웃으며 대화하는 친구 같은 분위기로 가까워졌어요.", icon: "chat" },
+        { face: "shySmile", pose: "bashful", distance: 30, myTurn: 1, targetTurn: -1, note: "서로를 의식하며 볼이 살짝 붉어진, 미묘한 설렘이 흐르는 모습이에요.", icon: "spark" },
+        { face: "happy", pose: "gift", distance: 18, myTurn: 1, targetTurn: -1, note: "한쪽이 작은 마음을 건네고, 다른 한쪽은 설레는 표정으로 받아들이는 장면이에요.", icon: "heart" },
+        { face: "happy", pose: "hand", distance: 7, myTurn: 1, targetTurn: -1, note: "두 사람이 거의 맞닿아 서서 손을 내미는, 확실한 그린라이트 장면이에요.", icon: "hearts" },
+        { face: "love", pose: "couple", distance: 0, myTurn: 1, targetTurn: -1, note: "이미 연인처럼 가까이 붙어 하트를 띄우는, 따뜻한 커플 미니미 모습이에요.", icon: "hearts" }
+    ];
+
+    return moods[level];
+}
+
+function pixelIcon(type) {
+    const icons = {
+        cloud: `
+            <rect x="16" y="24" width="28" height="8" fill="#ffffff" opacity=".75"/>
+            <rect x="24" y="18" width="18" height="8" fill="#ffffff" opacity=".75"/>
+            <rect x="122" y="34" width="24" height="8" fill="#ffffff" opacity=".65"/>
+            <rect x="132" y="28" width="14" height="8" fill="#ffffff" opacity=".65"/>`,
+        spark: `
+            <rect x="34" y="28" width="4" height="12" fill="#ffe681"/>
+            <rect x="30" y="32" width="12" height="4" fill="#ffe681"/>
+            <rect x="128" y="24" width="4" height="10" fill="#fff1a8"/>
+            <rect x="125" y="27" width="10" height="4" fill="#fff1a8"/>`,
+        chat: `
+            <rect x="72" y="22" width="26" height="14" fill="#fffaf0"/>
+            <rect x="78" y="36" width="6" height="4" fill="#fffaf0"/>
+            <rect x="78" y="28" width="4" height="3" fill="#d7bfa7"/>
+            <rect x="86" y="28" width="4" height="3" fill="#d7bfa7"/>`,
+        heart: `
+            <rect x="80" y="24" width="8" height="8" fill="#ff6f91"/>
+            <rect x="92" y="24" width="8" height="8" fill="#ff6f91"/>
+            <rect x="76" y="32" width="28" height="8" fill="#ff6f91"/>
+            <rect x="80" y="40" width="20" height="8" fill="#ff6f91"/>
+            <rect x="88" y="48" width="8" height="8" fill="#ff6f91"/>`,
+        hearts: `
+            <rect x="74" y="18" width="6" height="6" fill="#ff6f91"/>
+            <rect x="84" y="18" width="6" height="6" fill="#ff6f91"/>
+            <rect x="70" y="24" width="24" height="6" fill="#ff6f91"/>
+            <rect x="76" y="30" width="12" height="6" fill="#ff6f91"/>
+            <rect x="100" y="30" width="5" height="5" fill="#f7a7bc"/>
+            <rect x="108" y="30" width="5" height="5" fill="#f7a7bc"/>
+            <rect x="97" y="35" width="19" height="5" fill="#f7a7bc"/>
+            <rect x="102" y="40" width="9" height="5" fill="#f7a7bc"/>`
+    };
+
+    return icons[type] || "";
+}
+
+function generatePixelPerson(gender, age, level, isTarget) {
+    const colors = getAgePalette(age, gender, isTarget);
+    const mood = getSceneMood(level);
+    const face = mood.face;
+    const feminine = gender === "female";
+    const older = age === "50s+" || age === "40s";
+    const teen = age === "10s";
+    const facing = isTarget ? mood.targetTurn : mood.myTurn;
+    const flip = facing < 0 ? ` transform="translate(48 0) scale(-1 1)"` : "";
+    const hairSide = feminine ? `
+        <rect x="8" y="18" width="5" height="18" fill="${colors.hair}"/>
+        <rect x="35" y="18" width="5" height="18" fill="${colors.hair}"/>
+        <rect x="10" y="34" width="4" height="10" fill="${colors.hair}"/>
+        <rect x="34" y="34" width="4" height="10" fill="${colors.hair}"/>` : `
+        <rect x="11" y="14" width="6" height="6" fill="${colors.hair}"/>
+        <rect x="31" y="14" width="5" height="6" fill="${colors.hair}"/>`;
+    const hairTop = older ? `
+        <rect x="14" y="9" width="20" height="5" fill="#d1cbc3"/>
+        <rect x="10" y="14" width="28" height="8" fill="${colors.hair}"/>` : `
+        <rect x="13" y="8" width="22" height="6" fill="${colors.hair}"/>
+        <rect x="10" y="13" width="28" height="9" fill="${colors.hair}"/>
+        <rect x="9" y="19" width="7" height="6" fill="${colors.hair}"/>`;
+
+    const mouth = {
+        shy: `<rect x="21" y="31" width="6" height="2" fill="${colors.outline}"/>`,
+        calm: `<rect x="20" y="31" width="8" height="2" fill="${colors.outline}"/>`,
+        smile: `<rect x="18" y="30" width="3" height="2" fill="${colors.outline}"/><rect x="21" y="32" width="8" height="2" fill="${colors.outline}"/><rect x="29" y="30" width="3" height="2" fill="${colors.outline}"/>`,
+        shySmile: `<rect x="19" y="31" width="3" height="2" fill="${colors.outline}"/><rect x="22" y="33" width="6" height="2" fill="${colors.outline}"/><rect x="28" y="31" width="3" height="2" fill="${colors.outline}"/>`,
+        happy: `<rect x="18" y="30" width="4" height="2" fill="${colors.outline}"/><rect x="22" y="32" width="8" height="2" fill="${colors.outline}"/><rect x="30" y="30" width="4" height="2" fill="${colors.outline}"/>`,
+        love: `<rect x="19" y="31" width="4" height="3" fill="#d94f68"/><rect x="26" y="31" width="4" height="3" fill="#d94f68"/>`
+    }[face];
+
+    const blush = level >= 4 ? `
+        <rect x="12" y="29" width="5" height="3" fill="${colors.cheek}" opacity=".72"/>
+        <rect x="31" y="29" width="5" height="3" fill="${colors.cheek}" opacity=".72"/>` : "";
+    const skirt = feminine && age !== "30s" && age !== "40s" ? `
+        <rect x="13" y="47" width="22" height="6" fill="${colors.bottom}"/>
+        <rect x="11" y="53" width="26" height="5" fill="${colors.bottom}"/>` : `
+        <rect x="14" y="47" width="20" height="6" fill="${colors.bottom}"/>`;
+    const legs = feminine && age !== "30s" && age !== "40s" ? `
+        <rect x="16" y="58" width="5" height="12" fill="${colors.skin}"/>
+        <rect x="27" y="58" width="5" height="12" fill="${colors.skin}"/>` : `
+        <rect x="15" y="53" width="7" height="17" fill="${colors.bottom}"/>
+        <rect x="26" y="53" width="7" height="17" fill="${colors.bottom}"/>`;
+    const outfitDetail = teen ? `
+        <rect x="13" y="42" width="22" height="3" fill="${colors.accent}"/>
+        <rect x="9" y="47" width="4" height="8" fill="#8d6e63"/>` : `
+        <rect x="22" y="39" width="4" height="12" fill="${colors.accent}"/>`;
+
+    let arms = `
+        <rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/>
+        <rect x="35" y="40" width="5" height="18" fill="${colors.skin}"/>`;
+    if (mood.pose === "wave" && isTarget) {
+        arms = `<rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/><rect x="35" y="34" width="5" height="16" fill="${colors.skin}"/><rect x="38" y="31" width="5" height="5" fill="${colors.skin}"/>`;
+    } else if (mood.pose === "gift" && !isTarget) {
+        arms = `<rect x="8" y="41" width="5" height="16" fill="${colors.skin}"/><rect x="34" y="42" width="8" height="5" fill="${colors.skin}"/><rect x="39" y="39" width="6" height="6" fill="#ff6f91"/>`;
+    } else if (mood.pose === "hand" || mood.pose === "couple") {
+        arms = `<rect x="8" y="40" width="5" height="18" fill="${colors.skin}"/><rect x="34" y="43" width="12" height="5" fill="${colors.skin}"/>`;
+    }
 
     return `
-    <svg viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-        <!-- Body -->
-        <rect x="12" y="24" width="8" height="12" fill="${shirtColor}" />
-        <rect x="12" y="36" width="3" height="10" fill="${pantsColor}" />
-        <rect x="17" y="36" width="3" height="10" fill="${pantsColor}" />
-        <!-- Head -->
-        <rect x="10" y="8" width="12" height="16" fill="${skinColor}" />
-        <!-- Hair -->
-        <rect x="10" y="6" width="12" height="4" fill="${hairColor}" />
-        ${gender === 'female' ? `<rect x="8" y="10" width="2" height="14" fill="${hairColor}" /><rect x="22" y="10" width="2" height="14" fill="${hairColor}" />` : ''}
-        <!-- Eyes -->
-        <rect x="13" y="14" width="2" height="2" fill="#000" />
-        <rect x="17" y="14" width="2" height="2" fill="#000" />
-        <!-- Mouth -->
-        ${smileType === "smile" ? `<rect x="14" y="18" width="4" height="1" fill="#000" /><rect x="13" y="17" width="1" height="1" fill="#000" /><rect x="18" y="17" width="1" height="1" fill="#000" />` : 
-          smileType === "neutral" ? `<rect x="14" y="18" width="4" height="1" fill="#000" />` :
-          `<rect x="14" y="18" width="4" height="1" fill="#000" /><rect x="13" y="19" width="1" height="1" fill="#000" /><rect x="18" y="19" width="1" height="1" fill="#000" />`}
-        <!-- Blush -->
-        ${showBlush ? `<rect x="11" y="16" width="2" height="2" fill="#ff9999" opacity="0.6" /><rect x="19" y="16" width="2" height="2" fill="#ff9999" opacity="0.6" />` : ''}
+    <svg viewBox="0 0 48 76" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
+        <g${flip}>
+            <rect x="14" y="10" width="20" height="2" fill="${colors.outline}" opacity=".24"/>
+            ${hairTop}
+            ${hairSide}
+            <rect x="12" y="18" width="24" height="20" fill="${colors.skin}"/>
+            <rect x="15" y="21" width="18" height="4" fill="${colors.skin}" opacity=".55"/>
+            <rect x="17" y="26" width="4" height="4" fill="${colors.outline}"/>
+            <rect x="28" y="26" width="4" height="4" fill="${colors.outline}"/>
+            ${mouth}
+            ${blush}
+            <rect x="13" y="37" width="22" height="13" fill="${colors.top}"/>
+            <rect x="11" y="39" width="4" height="10" fill="${colors.top}"/>
+            <rect x="33" y="39" width="4" height="10" fill="${colors.top}"/>
+            ${outfitDetail}
+            ${arms}
+            ${skirt}
+            ${legs}
+            <rect x="13" y="70" width="11" height="4" fill="${colors.shoe}"/>
+            <rect x="25" y="70" width="11" height="4" fill="${colors.shoe}"/>
+        </g>
     </svg>`;
 }
 
@@ -229,25 +376,28 @@ function calculateAndShowResult() {
     document.getElementById('vibe-tip-text').innerText = result.tip;
     
     const scene = document.getElementById('result-scene');
-    scene.style.backgroundColor = result.color;
-
-    // Distances based on level
-    const distance = Math.max(0, (7 - level) * 15);
+    const mood = getSceneMood(level);
+    scene.className = `result-scene result-scene-level-${level}`;
     
     scene.innerHTML = `
+        <div class="pixel-sky" aria-hidden="true">
+            <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+                ${pixelIcon(mood.icon)}
+                <rect x="0" y="88" width="180" height="32" fill="rgba(255,255,255,.34)"/>
+                <rect x="0" y="94" width="180" height="4" fill="rgba(94,72,61,.18)"/>
+            </svg>
+        </div>
         <div class="minimi-stage">
-            <div class="interaction-layer">
-                ${level >= 5 ? '<div class="floating-heart" style="left:50%; top:20%;">❤️</div>' : ''}
-            </div>
-            <div class="minimi-wrap" style="transform: translateX(-${distance}px)">
-                <div class="minimi-svg">${generateMinimiSVG(selectionData.myGender, selectionData.age, level, false)}</div>
+            <div class="minimi-wrap minimi-me" style="transform: translateX(-${mood.distance}px)">
+                <div class="minimi-svg">${generatePixelPerson(selectionData.myGender, selectionData.age, level, false)}</div>
                 <div class="minimi-name">나</div>
             </div>
-            <div class="minimi-wrap" style="transform: translateX(${distance}px)">
-                <div class="minimi-svg">${generateMinimiSVG(selectionData.targetGender, selectionData.age, level, true)}</div>
+            <div class="minimi-wrap minimi-target" style="transform: translateX(${mood.distance}px)">
+                <div class="minimi-svg">${generatePixelPerson(selectionData.targetGender, selectionData.age, level, true)}</div>
                 <div class="minimi-name">그 사람</div>
             </div>
         </div>
+        <p class="scene-note">${mood.note}</p>
     `;
 
     showPage('result-page');
