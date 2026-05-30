@@ -248,10 +248,51 @@ header p {
     margin: 10px 0;
 }
 
-.result-image img {
-    width: 100%;
-    border-radius: var(--border-radius);
+.result-image {
     margin: 20px 0;
+}
+
+.pixel-pair {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: #fdf2f4;
+    padding: 20px;
+    border-radius: var(--border-radius);
+}
+
+.avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.avatar-wrap img {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    margin: 0 !important;
+}
+
+.avatar-wrap span {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+    font-weight: bold;
+}
+
+.heart-icon {
+    font-size: 2rem;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
 .score-box {

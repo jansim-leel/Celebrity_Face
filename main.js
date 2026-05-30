@@ -1,39 +1,86 @@
-const questions = [
-    "선톡(먼저 연락)이 자주 오나요?",
-    "눈이 마주치는 횟수가 평소보다 많은가요?",
-    "사소한 변화(머리 스타일, 옷 등)를 금방 알아채나요?",
-    "개인적인 고민이나 일상을 공유하나요?",
-    "나의 연락에 답장하는 속도가 빠른 편인가요?",
-    "나에 대해 궁금해하며 질문을 많이 하나요?",
-    "단둘이 만나자고 제안한 적이 있나요?",
-    "다른 사람보다 나에게 더 친절하다고 느끼나요?",
-    "SNS 게시물에 반응(좋아요, 댓글 등)을 잘 해주나요?",
-    "내가 좋아하는 음식이나 취미를 기억하고 있나요?",
-    "대화할 때 몸의 방향이 나를 향해 있나요?",
-    "별일 없어도 \"뭐해?\"라고 묻는 연락이 오나요?",
-    "은근슬쩍 가벼운 스킨십을 시도한 적이 있나요?",
-    "약속을 잡을 때 내 일정에 최대한 맞춰주나요?",
-    "우연히 마주치는 일이 자주 발생하나요?",
-    "나에게 칭찬을 자주 해주는 편인가요?",
-    "여러 명이 모인 자리에서 나를 유독 챙겨주나요?",
-    "헤어진 뒤에 집에 잘 들어갔는지 확인 연락을 하나요?",
-    "자신의 일상 사진을 나에게 보내주나요?",
-    "나에게 장난을 치거나 귀엽게 놀리나요?"
-];
+const questionBanks = {
+    "teen": [
+        "학교나 학원에서 마주치면 먼저 아는 척을 하나요?",
+        "급식 시간에 내 주변에 앉으려고 하나요?",
+        "쉬는 시간마다 내 자리 근처로 오나요?",
+        "수업 시간에 몰래 쳐다보다가 눈이 마주친 적이 있나요?",
+        "수행평가나 숙제를 핑계로 연락을 하나요?",
+        "체육 시간이나 동아리 활동 때 나를 유독 챙겨주나요?",
+        "내 매점 심부름이나 소소한 부탁을 잘 들어주나요?",
+        "시험 기간에 같이 공부하자고 하거나 필기를 빌려달라고 하나요?",
+        "등하굣길에 우연히 마주치는 일이 잦은가요?",
+        "SNS 스토리나 게시물에 칼답이나 반응을 잘 해주나요?",
+        "나한테만 간식을 몰래 챙겨준 적이 있나요?",
+        "친구들이 우리 둘을 엮을 때 당황하거나 싫어하지 않나요?",
+        "내 이름이 들어간 별명을 부르며 장난을 치나요?",
+        "학원 끝나고 같이 가자고 기다린 적이 있나요?",
+        "내가 아플 때 진심으로 걱정하며 보건실에 가라고 하나요?",
+        "내 프사가 바뀌면 바로 언급하거나 물어보나요?",
+        "방학 때도 심심하다며 먼저 선톡을 하나요?",
+        "자신이 좋아하는 아이돌이나 게임 이야기를 나에게만 공유하나요?",
+        "나랑 같은 반이나 팀이 되고 싶다는 말을 한 적이 있나요?",
+        "졸업 후에도 계속 연락하고 싶다는 뉘앙스를 풍기나요?"
+    ],
+    "standard": [
+        "선톡(먼저 연락)이 자주 오나요?",
+        "눈이 마주치는 횟수가 평소보다 많은가요?",
+        "사소한 변화(머리 스타일, 옷 등)를 금방 알아채나요?",
+        "개인적인 고민이나 일상을 공유하나요?",
+        "나의 연락에 답장하는 속도가 빠른 편인가요?",
+        "나에 대해 궁금해하며 질문을 많이 하나요?",
+        "단둘이 만나자고 제안한 적이 있나요?",
+        "다른 사람보다 나에게 더 친절하다고 느끼나요?",
+        "SNS 게시물에 반응(좋아요, 댓글 등)을 잘 해주나요?",
+        "내가 좋아하는 음식이나 취미를 기억하고 있나요?",
+        "대화할 때 몸의 방향이 나를 향해 있나요?",
+        "별일 없어도 \"뭐해?\"라고 묻는 연락이 오나요?",
+        "은근슬쩍 가벼운 스킨십을 시도한 적이 있나요?",
+        "약속을 잡을 때 내 일정에 최대한 맞춰주나요?",
+        "우연히 마주치는 일이 자주 발생하나요?",
+        "나에게 칭찬을 자주 해주는 편인가요?",
+        "여러 명이 모인 자리에서 나를 유독 챙겨주나요?",
+        "헤어진 뒤에 집에 잘 들어갔는지 확인 연락을 하나요?",
+        "자신의 일상 사진을 나에게 보내주나요?",
+        "나에게 장난을 치거나 귀엽게 놀리나요?"
+    ],
+    "mature": [
+        "퇴근 후나 주말에도 업무 외적인 연락이 오나요?",
+        "회식 자리에서 항상 내 근처에 앉으려고 하나요?",
+        "사적인 고민이나 커리어에 대한 진지한 대화를 나누나요?",
+        "내가 피곤해 보이면 커피나 간식을 챙겨주나요?",
+        "업무 중 실수를 했을 때 유독 나를 감싸주거나 도와주나요?",
+        "사석에서 따로 식사나 술 한잔하자고 제안하나요?",
+        "나의 사소한 취향(좋아하는 커피, 향기 등)을 기억하나요?",
+        "경조사나 특별한 날에 개인적으로 연락을 하나요?",
+        "나의 미래 계획이나 가치관에 대해 물어보나요?",
+        "다른 동료들에게는 엄격해도 나에게는 부드럽게 대하나요?",
+        "출장이나 외부 미팅 때 나랑 같이 가고 싶어 하나요?",
+        "사적인 자리에서 자신의 약점을 보여주기도 하나요?",
+        "내가 추천한 책이나 영화를 보고 후기를 남기나요?",
+        "말투에서 나를 존중하고 아끼는 게 느껴지나요?",
+        "연락할 때 이모티콘이나 부드러운 말투를 사용하나요?",
+        "나의 퇴근길이나 귀갓길을 걱정해 주나요?",
+        "본인의 가족이나 친한 친구 이야기를 들려주나요?",
+        "바쁜 와중에도 나의 연락에는 꼭 답장을 해주나요?",
+        "같이 있으면 시간이 금방 간다는 말을 한 적이 있나요?",
+        "내일 또 보자는 말이 단순히 인사처럼 들리지 않나요?"
+    ]
+};
 
 const results = [
-    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요.", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=300" },
-    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요.", img: "https://images.unsplash.com/photo-1516589174184-c685266d430c?auto=format&fit=crop&q=80&w=300" },
-    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=300" },
-    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!", img: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&q=80&w=300" },
-    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다.", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=300" },
-    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300" },
-    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요.", img: "https://images.unsplash.com/photo-1516575150278-77136aed6920?auto=format&fit=crop&q=80&w=300" },
-    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=300" }
+    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요." },
+    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요." },
+    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다." },
+    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!" },
+    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다." },
+    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!" },
+    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요." },
+    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!" }
 ];
 
+let currentQuestions = [];
 let currentPage = 0;
-let userAnswers = new Array(questions.length).fill(null);
+let userAnswers = [];
 let selectionData = { myGender: null, targetGender: null, age: '20s' };
 
 // Elements
@@ -60,6 +107,19 @@ startBtn.addEventListener('click', () => {
         return;
     }
     selectionData.age = document.getElementById('age-range').value;
+    
+    // Select question bank
+    if (selectionData.age === '10s') {
+        currentQuestions = questionBanks.teen;
+    } else if (selectionData.age === '20s') {
+        currentQuestions = questionBanks.standard;
+    } else {
+        currentQuestions = questionBanks.mature;
+    }
+
+    userAnswers = new Array(currentQuestions.length).fill(null);
+    currentPage = 0;
+    
     showPage('quiz-page');
     renderQuiz();
 });
@@ -72,10 +132,10 @@ function showPage(pageId) {
 function renderQuiz() {
     const startIndex = currentPage * 5;
     const endIndex = startIndex + 5;
-    const currentQuestions = questions.slice(startIndex, endIndex);
+    const questionsToShow = currentQuestions.slice(startIndex, endIndex);
 
     quizContainer.innerHTML = '';
-    currentQuestions.forEach((q, i) => {
+    questionsToShow.forEach((q, i) => {
         const qIndex = startIndex + i;
         const qElem = document.createElement('div');
         qElem.className = 'question-item';
@@ -103,7 +163,7 @@ window.selectAnswer = (qIndex, score) => {
 
 function updateProgress() {
     const totalAnswered = userAnswers.filter(a => a !== null).length;
-    const percent = (totalAnswered / questions.length) * 100;
+    const percent = (totalAnswered / currentQuestions.length) * 100;
     progress.style.width = `${percent}%`;
 }
 
@@ -139,10 +199,8 @@ function processResult() {
 
 function calculateAndShowResult() {
     const totalScore = userAnswers.reduce((sum, current) => sum + current, 0);
-    // Max score is 20 * 4 = 80. Convert to 0-100 scale.
     const normalizedScore = Math.round((totalScore / 80) * 100);
     
-    // Determine level (0-7)
     let level = 0;
     if (normalizedScore > 90) level = 7;
     else if (normalizedScore > 77) level = 6;
@@ -159,14 +217,37 @@ function calculateAndShowResult() {
     document.getElementById('result-level').innerText = `Lv. ${level}`;
     document.getElementById('result-desc').innerText = result.desc;
     document.getElementById('result-score').innerText = normalizedScore;
-    document.getElementById('result-img').src = result.img;
+    
+    // Generate Cute Pixel Art Image (Two characters)
+    const mySeed = `my-${selectionData.myGender}-${selectionData.age}`;
+    const targetSeed = `target-${selectionData.targetGender}-${selectionData.age}-${level}`;
+    
+    // Using Dicebear for cute pixel art avatars
+    const myAvatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${mySeed}`;
+    const targetAvatarUrl = `https://api.dicebear.com/7.x/pixel-art/svg?seed=${targetSeed}`;
+    
+    // Display as a pair
+    const resultImgContainer = document.querySelector('.result-image');
+    resultImgContainer.innerHTML = `
+        <div class="pixel-pair">
+            <div class="avatar-wrap">
+                <img src="${myAvatarUrl}" alt="나">
+                <span>나</span>
+            </div>
+            <div class="heart-icon">${level > 4 ? '❤️' : (level > 2 ? '❓' : '❄️')}</div>
+            <div class="avatar-wrap">
+                <img src="${targetAvatarUrl}" alt="그 사람">
+                <span>그 사람</span>
+            </div>
+        </div>
+    `;
 
     showPage('result-page');
 }
 
 restartBtn.addEventListener('click', () => {
     currentPage = 0;
-    userAnswers = new Array(questions.length).fill(null);
+    userAnswers = [];
     selectionData = { myGender: null, targetGender: null, age: '20s' };
     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
     showPage('landing-page');
