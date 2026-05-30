@@ -99,7 +99,7 @@ const questionBanks = {
         "나를 대할 때 긴장감보다는 깊은 신뢰와 편안함이 느껴지나요?",
         "먼 곳으로의 여행이나 새로운 배움을 함께 하자고 제안하나요?",
         "서로의 삶을 응원하며 긍정적인 에너지를 주고받나요?",
-        "소소한 일상의 기쁨을 나랑 함께 나눌 때 가장 행복해 보이나요?",
+        "소소한 일상의 기쁨을 나랑 함께 나눌 때 가장 행복해 보나요?",
         "나의 존재 자체가 본인에게 큰 힘이 된다고 말해주나요?",
         "말하지 않아도 서로의 마음을 이해하는 듯한 눈빛을 보내나요?",
         "앞으로의 삶에서 서로가 서로에게 든든한 동반자가 되길 원하나요?",
@@ -132,8 +132,44 @@ const pages = document.querySelectorAll('.page');
 const startBtn = document.getElementById('start-btn');
 const nextBtn = document.getElementById('next-btn');
 const restartBtn = document.getElementById('restart-btn');
+const shareBtn = document.getElementById('share-btn');
+const goToStartBtn = document.getElementById('go-to-start-btn');
 const quizContainer = document.getElementById('quiz-container');
 const progress = document.getElementById('progress');
+
+// 페이지 로드 시 공유된 결과가 있는지 확인
+window.addEventListener('load', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('level')) {
+        const level = parseInt(urlParams.get('level'));
+        const score = urlParams.get('score');
+        const age = urlParams.get('age');
+        const myGen = urlParams.get('myGen');
+        const targetGen = urlParams.get('tGen');
+        
+        if (!isNaN(level)) {
+            selectionData = { myGender: myGen, targetGender: targetGen, age: age };
+            showSharedResult(level, score);
+        }
+    }
+});
+
+function showSharedResult(level, score) {
+    // 공유된 결과를 보여줄 때는 '다시 하기' 대신 '나도 하기' 강조
+    restartBtn.style.display = 'none';
+    goToStartBtn.style.display = 'block';
+    
+    // 결과 데이터 채우기
+    const result = results[level];
+    document.getElementById('result-title').innerText = result.title;
+    document.getElementById('result-level').innerText = `Lv. ${level}`;
+    document.getElementById('result-desc').innerText = result.desc;
+    document.getElementById('result-score').innerText = score;
+    document.getElementById('vibe-tip-text').innerText = result.tip;
+    
+    renderResultScene(level);
+    showPage('result-page');
+}
 
 document.querySelectorAll('.option-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -214,130 +250,75 @@ function processResult() {
     setTimeout(calculateAndShowResult, 5000);
 }
 
-// 미니홈피 감성 캐릭터 엔진: 얇은 도트, 큰 얼굴, 작은 몸, 부드러운 명암
+// 픽셀 아트 엔진 (초정밀 1px 단위 렌더링)
 function generateMiniMe(gender, age, level, isTarget) {
     const colors = getAgePalette(age, gender, isTarget);
     const mood = getSceneMood(level);
-    const feminine = gender === 'female';
     const facing = isTarget ? mood.targetTurn : mood.myTurn;
-    const flip = facing < 0 ? ' transform="translate(96 0) scale(-1 1)"' : '';
-    const blush = level >= 4 ? '.88' : '.45';
-    const eye = level >= 7 ? '#5a302f' : '#3d2d2a';
-    const smile = level >= 5
-        ? `<rect x="40" y="58" width="4" height="2" fill="${colors.mouth}"/><rect x="44" y="60" width="10" height="2" fill="${colors.mouth}"/><rect x="54" y="58" width="4" height="2" fill="${colors.mouth}"/>`
-        : level >= 2
-            ? `<rect x="42" y="59" width="14" height="2" fill="${colors.mouth}"/>`
-            : `<rect x="43" y="61" width="12" height="2" fill="${colors.mouth}"/>`;
-
-    const hair = feminine ? `
-        <rect x="24" y="12" width="48" height="6" fill="${colors.hairDark}"/>
-        <rect x="20" y="18" width="56" height="10" fill="${colors.hair}"/>
-        <rect x="18" y="28" width="60" height="13" fill="${colors.hair}"/>
-        <rect x="16" y="40" width="10" height="34" fill="${colors.hairDark}"/>
-        <rect x="70" y="40" width="10" height="34" fill="${colors.hairDark}"/>
-        <rect x="20" y="68" width="8" height="13" fill="${colors.hairDark}"/>
-        <rect x="68" y="68" width="8" height="13" fill="${colors.hairDark}"/>
-        <rect x="26" y="16" width="24" height="4" fill="${colors.hairLight}" opacity=".78"/>
-        <rect x="22" y="30" width="8" height="23" fill="${colors.hairLight}" opacity=".34"/>`
-        : `
-        <rect x="25" y="13" width="46" height="7" fill="${colors.hairDark}"/>
-        <rect x="20" y="20" width="58" height="12" fill="${colors.hair}"/>
-        <rect x="18" y="31" width="18" height="11" fill="${colors.hair}"/>
-        <rect x="60" y="30" width="16" height="10" fill="${colors.hairDark}"/>
-        <rect x="28" y="16" width="21" height="4" fill="${colors.hairLight}" opacity=".72"/>`;
-
-    const lowerBody = feminine && age !== '40s' && age !== '50s+' ? `
-        <rect x="27" y="97" width="42" height="9" fill="${colors.bottom}"/>
-        <rect x="23" y="106" width="50" height="9" fill="${colors.bottom}"/>
-        <rect x="23" y="113" width="50" height="4" fill="${colors.bottomDark}" opacity=".6"/>
-        <rect x="31" y="117" width="8" height="20" fill="${colors.skin}"/>
-        <rect x="57" y="117" width="8" height="20" fill="${colors.skin}"/>
-        <rect x="31" y="130" width="8" height="7" fill="${colors.skinDark}" opacity=".48"/>
-        <rect x="57" y="130" width="8" height="7" fill="${colors.skinDark}" opacity=".48"/>`
-        : `
-        <rect x="29" y="97" width="16" height="40" fill="${colors.bottom}"/>
-        <rect x="51" y="97" width="16" height="40" fill="${colors.bottom}"/>
-        <rect x="38" y="98" width="7" height="38" fill="${colors.bottomDark}" opacity=".48"/>
-        <rect x="59" y="98" width="8" height="38" fill="${colors.bottomDark}" opacity=".5"/>`;
-
-    let leftArm = `<rect x="20" y="81" width="10" height="30" fill="${colors.skin}"/><rect x="20" y="104" width="10" height="9" fill="${colors.skinDark}" opacity=".45"/>`;
-    let rightArm = `<rect x="66" y="81" width="10" height="30" fill="${colors.skin}"/><rect x="66" y="104" width="10" height="9" fill="${colors.skinDark}" opacity=".45"/>`;
-
-    if (mood.pose === 'wave' && isTarget) {
-        rightArm = `<rect x="66" y="73" width="10" height="28" fill="${colors.skin}"/><rect x="73" y="68" width="9" height="9" fill="${colors.skin}"/>`;
-    } else if (mood.pose === 'gift' && !isTarget) {
-        rightArm = `<rect x="66" y="86" width="18" height="7" fill="${colors.skin}"/><rect x="80" y="80" width="10" height="10" fill="#ff6f91"/><rect x="84" y="78" width="3" height="14" fill="#ffe1ad"/>`;
-    } else if (mood.pose === 'hand' || mood.pose === 'couple') {
-        rightArm = `<rect x="66" y="88" width="22" height="7" fill="${colors.skin}"/><rect x="84" y="87" width="7" height="8" fill="${colors.skin}"/>`;
-    }
-
-    const ageDetail = age === '10s'
-        ? `<rect x="29" y="77" width="38" height="4" fill="#fff4a8" opacity=".85"/><rect x="22" y="88" width="8" height="16" fill="#9b7464"/>`
-        : `<rect x="45" y="75" width="6" height="29" fill="${colors.accent}" opacity=".9"/>`;
-
+    const flip = facing < 0 ? 'scaleX(-1)' : 'scaleX(1)';
+    
     return `
-    <svg viewBox="0 0 96 144" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
-        <g${flip}>
-            <rect x="28" y="137" width="44" height="4" fill="rgba(61,48,47,.18)"/>
-            ${hair}
-            <rect x="22" y="34" width="52" height="2" fill="${colors.skinDark}" opacity=".44"/>
-            <rect x="22" y="36" width="52" height="33" fill="${colors.skin}"/>
-            <rect x="24" y="36" width="48" height="7" fill="#ffd8bd" opacity=".58"/>
-            <rect x="24" y="62" width="48" height="7" fill="${colors.skinDark}" opacity=".2"/>
-            <rect x="31" y="48" width="5" height="6" fill="${eye}"/>
-            <rect x="60" y="48" width="5" height="6" fill="${eye}"/>
-            <rect x="32" y="48" width="2" height="2" fill="#fff7ec" opacity=".9"/>
-            <rect x="61" y="48" width="2" height="2" fill="#fff7ec" opacity=".9"/>
-            <rect x="26" y="56" width="10" height="4" fill="${colors.cheek}" opacity="${blush}"/>
-            <rect x="60" y="56" width="10" height="4" fill="${colors.cheek}" opacity="${blush}"/>
-            ${smile}
-            <rect x="28" y="70" width="40" height="34" fill="${colors.top}"/>
-            <rect x="30" y="72" width="34" height="5" fill="${colors.topLight}" opacity=".52"/>
-            <rect x="60" y="75" width="8" height="28" fill="${colors.topDark}" opacity=".58"/>
-            <rect x="28" y="70" width="40" height="2" fill="rgba(255,255,255,.34)"/>
-            ${leftArm}
-            ${rightArm}
-            ${ageDetail}
-            ${lowerBody}
-            <rect x="26" y="136" width="22" height="5" fill="${colors.shoe}"/>
-            <rect x="50" y="136" width="22" height="5" fill="${colors.shoe}"/>
-            <rect x="27" y="136" width="12" height="2" fill="rgba(255,255,255,.16)"/>
-            <rect x="51" y="136" width="12" height="2" fill="rgba(255,255,255,.16)"/>
+    <svg viewBox="0 0 40 60" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" style="transform: ${flip}; width: 100%; height: 100%;">
+        <ellipse cx="20" cy="56" rx="10" ry="2" fill="rgba(0,0,0,0.1)"/>
+        <g>
+            ${gender === 'female' ? `
+                <rect x="10" y="16" width="20" height="24" fill="${colors.hair}"/>
+                <rect x="9" y="16" width="1" height="23" fill="${colors.outline}"/>
+                <rect x="30" y="16" width="1" height="23" fill="${colors.outline}"/>
+                <rect x="10" y="39" width="20" height="1" fill="${colors.outline}"/>
+            ` : ''}
+            <rect x="14" y="40" width="12" height="14" fill="${colors.bottom}"/>
+            <rect x="13" y="40" width="1" height="13" fill="${colors.outline}"/>
+            <rect x="26" y="40" width="1" height="13" fill="${colors.outline}"/>
+            <rect x="14" y="53" width="12" height="1" fill="${colors.outline}"/>
+            <rect x="19" y="44" width="2" height="9" fill="black" opacity="0.1"/>
+            <rect x="11" y="28" width="18" height="14" fill="${colors.top}"/>
+            <rect x="11" y="28" width="18" height="2" fill="white" opacity="0.15"/>
+            <rect x="10" y="29" width="1" height="13" fill="${colors.outline}"/>
+            <rect x="29" y="29" width="1" height="13" fill="${colors.outline}"/>
+            <rect x="11" y="41" width="18" height="1" fill="${colors.outline}"/>
+            <rect x="8" y="29" width="3" height="11" fill="${colors.skin}"/>
+            <rect x="7" y="29" width="1" height="11" fill="${colors.outline}"/>
+            <rect x="30" y="29" width="3" height="11" fill="${colors.skin}"/>
+            <rect x="33" y="29" width="1" height="11" fill="${colors.outline}"/>
+            <rect x="12" y="10" width="16" height="20" fill="${colors.skin}"/>
+            <rect x="12" y="26" width="16" height="4" fill="black" opacity="0.05"/>
+            <rect x="11" y="12" width="1" height="18" fill="${colors.outline}"/>
+            <rect x="28" y="12" width="1" height="18" fill="${colors.outline}"/>
+            <rect x="12" y="29" width="16" height="1" fill="${colors.outline}"/>
+            <g>
+                <rect x="16" y="19" width="2" height="3" fill="${colors.outline}"/>
+                <rect x="16" y="19" width="1" height="1" fill="white" opacity="0.7"/>
+                <rect x="22" y="19" width="2" height="3" fill="${colors.outline}"/>
+                <rect x="22" y="19" width="1" height="1" fill="white" opacity="0.7"/>
+            </g>
+            <rect x="10" y="7" width="20" height="9" fill="${colors.hair}"/>
+            <rect x="11" y="6" width="18" height="1" fill="${colors.hair}"/>
+            <rect x="13" y="5" width="14" height="1" fill="${colors.hair}"/>
+            <rect x="13" y="4" width="14" height="1" fill="${colors.outline}"/>
+            <rect x="10" y="10" width="2" height="6" fill="${colors.hair}"/>
+            <rect x="28" y="10" width="2" height="6" fill="${colors.hair}"/>
+            ${level >= 5 ? `
+                <rect x="13" y="23" width="2" height="1" fill="#ffb6c1" opacity="0.9"/>
+                <rect x="25" y="23" width="2" height="1" fill="#ffb6c1" opacity="0.9"/>
+            ` : ''}
         </g>
     </svg>`;
 }
 
 function getAgePalette(age, gender, isTarget) {
-    const base = {
-        skin: '#f2c4a2', skinDark: '#dcaa8c', cheek: '#ef8f8f', mouth: '#5a3332', shoe: '#3d302f'
+    const palettes = {
+        "10s": { hair: "#3a2a24", top: "#a5d8ff", bottom: "#4c6ef5", skin: "#ffe3d5", outline: "#2b1d18" },
+        "20s": { hair: "#4d3a31", top: "#63e6be", bottom: "#5c7cfa", skin: "#fff0e6", outline: "#1f1512" },
+        "30s": { hair: "#2b1d18", top: "#ffadad", bottom: "#495057", skin: "#fff5f0", outline: "#1a110e" },
+        "40s": { hair: "#1a110e", top: "#ffd8a8", bottom: "#343a40", skin: "#fff9f5", outline: "#000000" },
+        "50s+": { hair: "#495057", top: "#d0ebff", bottom: "#212529", skin: "#ffffff", outline: "#000000" }
     };
-    const table = {
-        '10s': { hair: '#3a2a24', hairDark: '#2b201d', hairLight: '#6b5047', top: '#8dc6ff', topDark: '#6099d0', topLight: '#c8e5ff', bottom: '#4b6fb3', bottomDark: '#344f86', accent: '#fff3a6' },
-        '20s': { hair: '#5b3528', hairDark: '#44261d', hairLight: '#8a5c4d', top: '#f08f73', topDark: '#c96d58', topLight: '#ffc0ad', bottom: '#6f5aa8', bottomDark: '#51417f', accent: '#ffe1ad' },
-        '30s': { hair: '#44302a', hairDark: '#2f211d', hairLight: '#6c5148', top: '#d48791', topDark: '#ad6871', topLight: '#efb2ba', bottom: '#35445f', bottomDark: '#253047', accent: '#f6ead7' },
-        '40s': { hair: '#332c29', hairDark: '#24201f', hairLight: '#6b625e', top: '#b47868', topDark: '#8e5b50', topLight: '#d8a092', bottom: '#3e3d55', bottomDark: '#2c2b3d', accent: '#eadbc8' },
-        '50s+': { hair: '#aaa39b', hairDark: '#817b75', hairLight: '#d7d1c8', top: '#7895a4', topDark: '#5d7480', topLight: '#a7c1cf', bottom: '#4e5061', bottomDark: '#373946', accent: '#f2e6d2' }
-    };
-    const palette = { ...base, ...table[age] };
+    const p = palettes[age] || palettes["20s"];
     if (isTarget) {
-        palette.top = gender === 'female' ? '#f39bb0' : '#67b7a5';
-        palette.topDark = gender === 'female' ? '#c87589' : '#4c927f';
-        palette.topLight = gender === 'female' ? '#ffc8d6' : '#a3ddcf';
+        return { ...p, top: gender === 'female' ? '#ffc9c9' : '#a5d8ff' };
     }
-    if (gender === 'male') {
-        palette.bottom = age === '10s' ? '#30436f' : '#435f8a';
-        palette.bottomDark = age === '10s' ? '#202d4c' : '#2d4264';
-    }
-    return palette;
-}
-
-function shadeColor(hex, percent) {
-    const num = parseInt(hex.replace('#', ''), 16);
-    const amt = Math.round(2.55 * percent);
-    const r = Math.max(0, Math.min(255, (num >> 16) + amt));
-    const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amt));
-    const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
-    return `#${(0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    return p;
 }
 
 function getSceneMood(level) {
@@ -375,67 +356,11 @@ function calculateAndShowResult() {
     document.getElementById('result-score').innerText = normalizedScore;
     document.getElementById('vibe-tip-text').innerText = result.tip;
     
-    const scene = document.getElementById('result-scene');
-    const mood = getSceneMood(level);
-    
-    scene.className = `result-scene result-scene-level-${level}`;
-    scene.innerHTML = `
-        <div class="room-shelf" aria-hidden="true"></div>
-        <div class="room-photo" aria-hidden="true"></div>
-        <div class="room-rug" aria-hidden="true"></div>
-        ${level >= 5 ? '<div class="pixel-heart" aria-hidden="true"></div>' : ''}
-        <p class="scene-note">${mood.note}</p>
-        <div class="minimi-stage">
-            <div class="minimi-wrap minimi-me" style="transform: translateX(-${mood.distance}px)">
-                <div class="minimi-svg">${generateMiniMe(selectionData.myGender, selectionData.age, level, false)}</div>
-                <div class="minimi-name">나</div>
-            </div>
-            <div class="minimi-wrap minimi-target" style="transform: translateX(${mood.distance}px)">
-                <div class="minimi-svg">${generateMiniMe(selectionData.targetGender, selectionData.age, level, true)}</div>
-                <div class="minimi-name">그 사람</div>
-            </div>
-        </div>
-    `;
-
+    renderResultScene(level);
     showPage('result-page');
 }
 
-const restartBtn = document.getElementById('restart-btn');
-const shareBtn = document.getElementById('share-btn');
-const goToStartBtn = document.getElementById('go-to-start-btn');
-const quizContainer = document.getElementById('quiz-container');
-const progress = document.getElementById('progress');
-
-// 페이지 로드 시 공유된 결과가 있는지 확인
-window.addEventListener('load', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('level')) {
-        const level = parseInt(urlParams.get('level'));
-        const score = urlParams.get('score');
-        const age = urlParams.get('age');
-        const myGen = urlParams.get('myGen');
-        const targetGen = urlParams.get('tGen');
-        
-        if (!isNaN(level)) {
-            selectionData = { myGender: myGen, targetGender: targetGen, age: age };
-            showSharedResult(level, score);
-        }
-    }
-});
-
-function showSharedResult(level, score) {
-    // 공유된 결과를 보여줄 때는 '다시 하기' 대신 '나도 하기' 강조
-    document.getElementById('restart-btn').style.display = 'none';
-    document.getElementById('go-to-start-btn').style.display = 'block';
-    
-    // 결과 데이터 채우기 (calculateAndShowResult 로직 활용)
-    const result = results[level];
-    document.getElementById('result-title').innerText = result.title;
-    document.getElementById('result-level').innerText = `Lv. ${level}`;
-    document.getElementById('result-desc').innerText = result.desc;
-    document.getElementById('result-score').innerText = score;
-    document.getElementById('vibe-tip-text').innerText = result.tip;
-    
+function renderResultScene(level) {
     const scene = document.getElementById('result-scene');
     const mood = getSceneMood(level);
     scene.innerHTML = `
@@ -453,19 +378,23 @@ function showSharedResult(level, score) {
         </div>
         <p class="scene-note" style="margin-top: 15px; font-size: 0.9rem; color: #666;">${mood.note}</p>
     `;
-    showPage('result-page');
 }
 
+restartBtn.addEventListener('click', () => {
+    currentPage = 0; userAnswers = [];
+    selectionData = { myGender: null, targetGender: null, age: '20s' };
+    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    showPage('landing-page');
+});
+
 goToStartBtn.addEventListener('click', () => {
-    window.location.href = window.location.pathname; // 파라미터 없이 새로고침하여 처음으로
+    window.location.href = window.location.pathname;
 });
 
 shareBtn.addEventListener('click', () => {
     const totalScore = userAnswers.length > 0 ? userAnswers.reduce((sum, current) => sum + current, 0) : document.getElementById('result-score').innerText;
     const normalizedScore = userAnswers.length > 0 ? Math.round((totalScore / 80) * 100) : totalScore;
     const level = document.getElementById('result-level').innerText.split(' ')[1];
-    
-    // 결과 데이터를 포함한 공유 URL 생성
     const shareUrl = `${window.location.origin}${window.location.pathname}?level=${level}&score=${normalizedScore}&age=${selectionData.age}&myGen=${selectionData.myGender}&tGen=${selectionData.targetGender}`;
 
     const shareData = {
