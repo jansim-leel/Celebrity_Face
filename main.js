@@ -400,32 +400,89 @@ function calculateAndShowResult() {
     showPage('result-page');
 }
 
+const restartBtn = document.getElementById('restart-btn');
 const shareBtn = document.getElementById('share-btn');
+const goToStartBtn = document.getElementById('go-to-start-btn');
+const quizContainer = document.getElementById('quiz-container');
+const progress = document.getElementById('progress');
+
+// 페이지 로드 시 공유된 결과가 있는지 확인
+window.addEventListener('load', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('level')) {
+        const level = parseInt(urlParams.get('level'));
+        const score = urlParams.get('score');
+        const age = urlParams.get('age');
+        const myGen = urlParams.get('myGen');
+        const targetGen = urlParams.get('tGen');
+        
+        if (!isNaN(level)) {
+            selectionData = { myGender: myGen, targetGender: targetGen, age: age };
+            showSharedResult(level, score);
+        }
+    }
+});
+
+function showSharedResult(level, score) {
+    // 공유된 결과를 보여줄 때는 '다시 하기' 대신 '나도 하기' 강조
+    document.getElementById('restart-btn').style.display = 'none';
+    document.getElementById('go-to-start-btn').style.display = 'block';
+    
+    // 결과 데이터 채우기 (calculateAndShowResult 로직 활용)
+    const result = results[level];
+    document.getElementById('result-title').innerText = result.title;
+    document.getElementById('result-level').innerText = `Lv. ${level}`;
+    document.getElementById('result-desc').innerText = result.desc;
+    document.getElementById('result-score').innerText = score;
+    document.getElementById('vibe-tip-text').innerText = result.tip;
+    
+    const scene = document.getElementById('result-scene');
+    const mood = getSceneMood(level);
+    scene.innerHTML = `
+        <div class="mini-room" style="background: #f0e6d6; border: 4px solid #c9b9a5; position: relative; height: 180px; overflow: hidden; image-rendering: pixelated;">
+            <div class="room-floor" style="position: absolute; bottom: 0; width: 100%; height: 60px; background: #e2d3bc; border-top: 2px solid #c9b9a5;"></div>
+            <div class="room-window" style="position: absolute; top: 20px; right: 30px; width: 40px; height: 50px; background: #fff; border: 2px solid #c9b9a5; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);"></div>
+            <div class="minimi-stage" style="position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: center; align-items: flex-end;">
+                <div class="minimi-wrap" style="transform: translateX(-${mood.distance}px)">
+                    ${generateMiniMe(selectionData.myGender, selectionData.age, level, false)}
+                </div>
+                <div class="minimi-wrap" style="transform: translateX(${mood.distance}px)">
+                    ${generateMiniMe(selectionData.targetGender, selectionData.age, level, true)}
+                </div>
+            </div>
+        </div>
+        <p class="scene-note" style="margin-top: 15px; font-size: 0.9rem; color: #666;">${mood.note}</p>
+    `;
+    showPage('result-page');
+}
+
+goToStartBtn.addEventListener('click', () => {
+    window.location.href = window.location.pathname; // 파라미터 없이 새로고침하여 처음으로
+});
 
 shareBtn.addEventListener('click', () => {
+    const totalScore = userAnswers.length > 0 ? userAnswers.reduce((sum, current) => sum + current, 0) : document.getElementById('result-score').innerText;
+    const normalizedScore = userAnswers.length > 0 ? Math.round((totalScore / 80) * 100) : totalScore;
+    const level = document.getElementById('result-level').innerText.split(' ')[1];
+    
+    // 결과 데이터를 포함한 공유 URL 생성
+    const shareUrl = `${window.location.origin}${window.location.pathname}?level=${level}&score=${normalizedScore}&age=${selectionData.age}&myGen=${selectionData.myGender}&tGen=${selectionData.targetGender}`;
+
     const shareData = {
         title: '연애 호감도 테스트',
-        text: `저의 호감도 테스트 결과는 ${document.getElementById('result-title').innerText} (Lv. ${document.getElementById('result-level').innerText.split(' ')[1]}) 입니다! 여러분도 테스트해보세요!`,
-        url: window.location.href
+        text: `저의 호감도 테스트 결과는 ${document.getElementById('result-title').innerText} (Lv. ${level}) 입니다! 여러분도 테스트해보세요!`,
+        url: shareUrl
     };
 
     if (navigator.share) {
         navigator.share(shareData).catch(err => console.log('Error sharing:', err));
     } else {
-        // Fallback: Copy to clipboard
         const tempInput = document.createElement('input');
-        tempInput.value = window.location.href;
+        tempInput.value = shareUrl;
         document.body.appendChild(tempInput);
         tempInput.select();
         document.execCommand('copy');
         document.body.removeChild(tempInput);
-        alert('테스트 링크가 클립보드에 복사되었습니다. 원하는 곳에 붙여넣어 공유하세요!');
+        alert('나의 결과가 담긴 링크가 복사되었습니다! 친구들에게 공유해보세요.');
     }
-});
-
-restartBtn.addEventListener('click', () => {
-    currentPage = 0; userAnswers = [];
-    selectionData = { myGender: null, targetGender: null, age: '20s' };
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    showPage('landing-page');
 });

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결과 이미지 스타일 후보 v2</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: #f6f1eb;
+            color: #3f302c;
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+        main { width: min(1100px, 100%); margin: 0 auto; padding: 28px 18px 42px; }
+        h1 { margin: 0 0 8px; font-size: clamp(1.35rem, 3vw, 2rem); letter-spacing: 0; }
+        .intro { margin: 0 0 22px; color: #725d55; line-height: 1.55; font-size: .95rem; }
+        .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .card { background: #fffaf4; border: 1px solid #d6bdac; border-radius: 8px; padding: 14px; box-shadow: 0 8px 20px rgba(82,55,42,.08); }
+        .card h2 { margin: 0 0 6px; font-size: 1.02rem; }
+        .card p { margin: 0 0 12px; color: #6f5a51; font-size: .84rem; line-height: 1.45; word-break: keep-all; }
+        .scene {
+            position: relative;
+            height: 330px;
+            overflow: hidden;
+            border: 1px solid #a68b7e;
+            border-radius: 5px;
+            background: linear-gradient(#ffe7ee 0 56%, #ead6b8 56%);
+            image-rendering: pixelated;
+        }
+        .scene::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px);
+            background-size: 6px 6px;
+        }
+        .note {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            top: 12px;
+            z-index: 4;
+            background: rgba(255,250,244,.94);
+            border: 1px solid rgba(137,106,91,.28);
+            border-radius: 4px;
+            padding: 8px 10px;
+            color: #5e4942;
+            font-size: .76rem;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+        .miniroom .shelf { position: absolute; left: 22px; top: 86px; width: 86px; height: 30px; border: 1px solid #b99a8b; background: #fff5df; box-shadow: inset 0 -7px #e8caa6; }
+        .miniroom .photo { position: absolute; right: 26px; top: 84px; width: 54px; height: 64px; background: #fffaf4; border: 1px solid #b99a8b; transform: rotate(2deg); }
+        .miniroom .photo::after { content: ''; position: absolute; left: 7px; right: 7px; top: 7px; height: 34px; background: #b6d7ef; }
+        .room2 { background: linear-gradient(#f8e2ff 0 54%, #e7d5bb 54%); }
+        .room2 .curtain { position: absolute; left: 28px; top: 70px; width: 76px; height: 66px; background: repeating-linear-gradient(90deg,#f6a8bd 0 9px,#ffd4df 9px 18px); border: 1px solid #bd8a97; }
+        .room2 .rug { position: absolute; left: 50%; bottom: 38px; width: 218px; height: 34px; transform: translateX(-50%); background: repeating-linear-gradient(90deg,#ffd166 0 12px,#ff9fb1 12px 24px,#8dd7c2 24px 36px); border: 1px solid #ac8575; }
+        .room3 { background: linear-gradient(#dcecf8 0 52%, #d9c59d 52%); }
+        .room3 .window { position: absolute; right: 22px; top: 76px; width: 84px; height: 58px; background: #a8d9f1; border: 5px solid #fffaf4; box-shadow: 0 0 0 1px #b99a8b; }
+        .room3 .plant { position: absolute; left: 26px; bottom: 94px; width: 34px; height: 54px; background: linear-gradient(#6bae74 0 42%, transparent 42%); border-bottom: 26px solid #c38b6b; }
+        .sprite {
+            position: absolute;
+            bottom: 44px;
+            width: 118px;
+            height: 198px;
+            z-index: 2;
+            filter: drop-shadow(3px 5px 0 rgba(71,49,42,.13));
+        }
+        .sprite.left { left: calc(50% - 122px); }
+        .sprite.right { right: calc(50% - 122px); }
+        .sprite svg { width: 100%; height: 100%; display: block; }
+        .name {
+            position: absolute;
+            bottom: 18px;
+            z-index: 5;
+            background: #fffaf4;
+            border: 1px solid #b59383;
+            border-radius: 3px;
+            padding: 2px 8px;
+            font-size: .72rem;
+            box-shadow: 1px 1px 0 rgba(71,49,42,.1);
+        }
+        .name.left { left: calc(50% - 94px); }
+        .name.right { right: calc(50% - 94px); }
+        .heart {
+            position: absolute;
+            left: 50%; top: 72px;
+            width: 36px; height: 36px;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+        .sparkle { position: absolute; z-index: 3; width: 16px; height: 16px; }
+        .sparkle.one { left: 34%; top: 122px; }
+        .sparkle.two { right: 31%; top: 112px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .scene { height: 320px; } }
+    </style>
+</head>
+<body>
+<main>
+    <h1>결과 이미지 스타일 후보 v2</h1>
+    <p class="intro">픽셀을 더 잘게 쪼개고, 외곽선을 얇게 줄이고, 머리카락/얼굴/옷에 명암을 넣은 버전입니다. 실제 결과 페이지에는 아직 반영하지 않았습니다.</p>
+    <section class="grid">
+        <article class="card">
+            <h2>A. 부드러운 미니미 인형형</h2>
+            <p>큰 얼굴과 작은 몸은 유지하되 픽셀을 촘촘하게 만들고, 볼/머리/옷에 명암을 넣은 방향.</p>
+            <div class="scene miniroom">
+                <div class="shelf"></div><div class="photo"></div>
+                <div class="note">호감도 높음: 둘 다 볼이 붉어지고, 한쪽이 작은 하트를 건네는 장면.</div>
+                <div class="sprite left" id="a1"></div><div class="sprite right" id="a2"></div>
+                <svg class="heart" viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="7" y="7" width="7" height="7" fill="#ff6f91"/><rect x="18" y="7" width="7" height="7" fill="#ff6f91"/><rect x="5" y="14" width="22" height="7" fill="#ff6f91"/><rect x="9" y="21" width="14" height="6" fill="#ff6f91"/><rect x="14" y="27" width="4" height="4" fill="#ff6f91"/></svg>
+                <span class="name left">나</span><span class="name right">그 사람</span>
+            </div>
+        </article>
+        <article class="card">
+            <h2>B. 입체감 강화 미니룸형</h2>
+            <p>머리 하이라이트와 옷 그림자를 더 많이 넣어서 납작함을 줄인 후보. 캐릭터가 가장 또렷합니다.</p>
+            <div class="scene room2">
+                <div class="curtain"></div><div class="rug"></div>
+                <div class="note">호감도 중상: 서로 가까이 서서 어색하지만 기분 좋은 미소를 짓는 장면.</div>
+                <div class="sprite left" id="b1"></div><div class="sprite right" id="b2"></div>
+                <svg class="sparkle one" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="7" y="1" width="2" height="14" fill="#ffd166"/><rect x="1" y="7" width="14" height="2" fill="#ffd166"/></svg>
+                <svg class="sparkle two" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="7" y="2" width="2" height="12" fill="#fff1a8"/><rect x="2" y="7" width="12" height="2" fill="#fff1a8"/></svg>
+                <span class="name left">나</span><span class="name right">그 사람</span>
+            </div>
+        </article>
+        <article class="card">
+            <h2>C. 얇은 도트 커플컷형</h2>
+            <p>게임 도트 느낌은 거의 빼고, 미니홈피 스티커처럼 얇고 정돈된 커플 아바타로 잡은 후보.</p>
+            <div class="scene room3">
+                <div class="window"></div><div class="plant"></div>
+                <div class="note">호감도 매우 높음: 서로 마주 보고 손을 내밀며 이미 연인처럼 가까운 분위기.</div>
+                <div class="sprite left" id="c1"></div><div class="sprite right" id="c2"></div>
+                <svg class="heart" viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="8" y="8" width="6" height="6" fill="#e95776"/><rect x="18" y="8" width="6" height="6" fill="#e95776"/><rect x="6" y="14" width="20" height="6" fill="#e95776"/><rect x="10" y="20" width="12" height="5" fill="#e95776"/><rect x="14" y="25" width="4" height="4" fill="#e95776"/></svg>
+                <span class="name left">나</span><span class="name right">그 사람</span>
+            </div>
+        </article>
+    </section>
+</main>
+<script>
+function person({gender='female', flip=false, hair='#5b3528', top='#f08f73', bottom='#6f5aa8', skin='#f1c4a2', pose='heart', detail=true}) {
+    const skirt = gender === 'female';
+    const flipAttr = flip ? ' transform="translate(96 0) scale(-1 1)"' : '';
+    const longHair = gender === 'female';
+    const armRight = pose === 'heart' ? '<rect x="66" y="84" width="15" height="5" fill="'+skin+'"/><rect x="78" y="79" width="7" height="7" fill="#ff6f91"/>' : '<rect x="65" y="86" width="16" height="5" fill="'+skin+'"/>';
+    return `
+    <svg viewBox="0 0 96 144" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
+        <g${flipAttr}>
+            <rect x="28" y="8" width="40" height="5" fill="rgba(71,49,42,.18)"/>
+            <rect x="25" y="11" width="46" height="8" fill="${hair}"/>
+            <rect x="20" y="19" width="56" height="14" fill="${hair}"/>
+            <rect x="22" y="31" width="52" height="36" fill="${skin}"/>
+            <rect x="24" y="31" width="48" height="6" fill="#ffd4b7" opacity=".75"/>
+            ${longHair ? `<rect x="16" y="30" width="8" height="36" fill="${hair}"/><rect x="72" y="30" width="8" height="36" fill="${hair}"/><rect x="18" y="64" width="7" height="14" fill="${hair}"/><rect x="71" y="64" width="7" height="14" fill="${hair}"/>` : `<rect x="19" y="25" width="11" height="12" fill="${hair}"/><rect x="66" y="25" width="9" height="11" fill="${hair}"/>`}
+            <rect x="31" y="42" width="5" height="6" fill="#3e2e2b"/><rect x="59" y="42" width="5" height="6" fill="#3e2e2b"/>
+            <rect x="27" y="51" width="9" height="4" fill="#ee8b91" opacity=".8"/><rect x="60" y="51" width="9" height="4" fill="#ee8b91" opacity=".8"/>
+            <rect x="41" y="58" width="14" height="3" fill="#3e2e2b"/><rect x="39" y="56" width="4" height="3" fill="#3e2e2b"/><rect x="55" y="56" width="4" height="3" fill="#3e2e2b"/>
+            <rect x="28" y="70" width="40" height="27" fill="${top}"/>
+            <rect x="29" y="70" width="36" height="5" fill="#ffd2c1" opacity=".38"/>
+            <rect x="58" y="74" width="10" height="23" fill="rgba(71,49,42,.12)"/>
+            <rect x="20" y="76" width="10" height="24" fill="${skin}"/>
+            ${armRight}
+            <rect x="45" y="72" width="6" height="25" fill="#fff0c8" opacity=".85"/>
+            ${skirt ? `<rect x="25" y="97" width="46" height="10" fill="${bottom}"/><rect x="21" y="107" width="54" height="9" fill="${bottom}"/><rect x="29" y="116" width="9" height="19" fill="${skin}"/><rect x="58" y="116" width="9" height="19" fill="${skin}"/>` : `<rect x="28" y="97" width="17" height="38" fill="${bottom}"/><rect x="52" y="97" width="17" height="38" fill="${bottom}"/><rect x="61" y="101" width="8" height="34" fill="rgba(30,25,24,.16)"/>`}
+            <rect x="24" y="135" width="19" height="5" fill="#3a302e"/><rect x="54" y="135" width="19" height="5" fill="#3a302e"/>
+            ${detail ? `<rect x="28" y="20" width="23" height="4" fill="rgba(255,255,255,.18)"/><rect x="23" y="37" width="4" height="18" fill="rgba(255,255,255,.18)"/><rect x="33" y="76" width="14" height="3" fill="rgba(255,255,255,.18)"/>` : ''}
+        </g>
+    </svg>`;
+}
+
+document.getElementById('a1').innerHTML = person({gender:'female', hair:'#6a3f32', top:'#f39bb0', bottom:'#705aa9', pose:'heart'});
+document.getElementById('a2').innerHTML = person({gender:'male', flip:true, hair:'#3b2e2a', top:'#68b8a7', bottom:'#405c86', pose:'reach'});
+document.getElementById('b1').innerHTML = person({gender:'female', hair:'#4f342d', top:'#e98484', bottom:'#5f6fa8', pose:'reach'});
+document.getElementById('b2').innerHTML = person({gender:'male', flip:true, hair:'#2f2927', top:'#7abf9d', bottom:'#394762', pose:'reach'});
+document.getElementById('c1').innerHTML = person({gender:'female', hair:'#5b3528', top:'#f08f73', bottom:'#6f5aa8', pose:'reach'});
+document.getElementById('c2').innerHTML = person({gender:'male', flip:true, hair:'#332a27', top:'#67b7a5', bottom:'#435f8a', pose:'reach'});
+</script>
+</body>
+</html>
