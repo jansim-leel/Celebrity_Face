@@ -375,13 +375,28 @@ function calculateAndShowResult() {
     showPage('result-page');
 }
 
-restartBtn.addEventListener('click', () => {
-    currentPage = 0; userAnswers = [];
-    selectionData = { myGender: null, targetGender: null, age: '20s' };
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    showPage('landing-page');
-});
+const shareBtn = document.getElementById('share-btn');
 
+shareBtn.addEventListener('click', () => {
+    const shareData = {
+        title: '연애 호감도 테스트',
+        text: `저의 호감도 테스트 결과는 ${document.getElementById('result-title').innerText} (Lv. ${document.getElementById('result-level').innerText.split(' ')[1]}) 입니다! 여러분도 테스트해보세요!`,
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData).catch(err => console.log('Error sharing:', err));
+    } else {
+        // Fallback: Copy to clipboard
+        const tempInput = document.createElement('input');
+        tempInput.value = window.location.href;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        alert('테스트 링크가 클립보드에 복사되었습니다. 원하는 곳에 붙여넣어 공유하세요!');
+    }
+});
 
 restartBtn.addEventListener('click', () => {
     currentPage = 0; userAnswers = [];
