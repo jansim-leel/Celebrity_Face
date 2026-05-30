@@ -68,14 +68,14 @@ const questionBanks = {
 };
 
 const results = [
-    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요.", tip: "조급해하지 마세요. 인연은 생각지도 못한 순간에 찾아온답니다.", color: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" },
-    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요.", tip: "가벼운 눈인사부터 시작해 보는 건 어떨까요?", color: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" },
-    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다.", tip: "함께 공감할 수 있는 관심사를 찾아보세요.", color: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)" },
-    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!", tip: "편안함 속에 설렘 한 스푼을 더해보세요.", color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" },
-    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다.", tip: "상대방의 작은 신호에 귀를 기울여 보세요.", color: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)" },
-    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!", tip: "당신의 진심을 보여줄 때가 다가오고 있어요.", color: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)" },
-    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요.", tip: "더 이상 고민하지 말고 먼저 손을 내밀어 보세요.", color: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)" },
-    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!", tip: "오늘 당장 보고 싶다고 말해보는 건 어떨까요?", color: "linear-gradient(135deg, #ff0844 0%, #ffb199 100%)" }
+    { level: 0, title: "완벽한 타인", desc: "상대방은 당신에 대해 아직 큰 관심이 없어 보여요. 조금 더 시간을 두고 친해질 기회를 만들어보세요.", tip: "조급해하지 마세요. 인연은 생각지도 못한 순간에 찾아온답니다.", color: "#eef2f3" },
+    { level: 1, title: "스쳐가는 인연", desc: "서로 얼굴은 알지만 사적인 감정은 거의 없는 상태입니다. 인사를 나누며 천천히 다가가 보세요.", tip: "가벼운 눈인사부터 시작해 보는 건 어떨까요?", color: "#e0eafc" },
+    { level: 2, title: "아는 사이", desc: "어색함은 없지만 특별한 호감보다는 '지인' 정도로 생각하고 있을 확률이 높습니다.", tip: "함께 공감할 수 있는 관심사를 찾아보세요.", color: "#cfd9df" },
+    { level: 3, title: "편한 친구", desc: "당신을 편한 대화 상대로 느끼고 있습니다. 호감으로 발전할 수 있는 가능성은 열려 있어요!", tip: "편안함 속에 설렘 한 스푼을 더해보세요.", color: "#d299c2" },
+    { level: 4, title: "미묘한 기류", desc: "단순한 친구 이상의 감정이 조금씩 싹트고 있네요. 서로 눈치를 보고 있을 수도 있습니다.", tip: "상대방의 작은 신호에 귀를 기울여 보세요.", color: "#a1c4fd" },
+    { level: 5, title: "설레는 호감", desc: "상대방은 당신에게 확실히 호감을 느끼고 있습니다. 조만간 기분 좋은 일이 생길지도 몰라요!", tip: "당신의 진심을 보여줄 때가 다가오고 있어요.", color: "#ff9a9e" },
+    { level: 6, title: "확실한 그린라이트", desc: "이건 99% 호감입니다! 누가 먼저 고백해도 이상하지 않은 상태네요. 용기를 내보세요.", tip: "더 이상 고민하지 말고 먼저 손을 내밀어 보세요.", color: "#f6d365" },
+    { level: 7, title: "이미 내 마음속 연인", desc: "상대방은 이미 당신을 연인처럼 생각하고 있습니다. 사랑이 가득한 앞날을 응원합니다!", tip: "오늘 당장 보고 싶다고 말해보는 건 어떨까요?", color: "#ff0844" }
 ];
 
 let currentQuestions = [];
@@ -91,7 +91,6 @@ const restartBtn = document.getElementById('restart-btn');
 const quizContainer = document.getElementById('quiz-container');
 const progress = document.getElementById('progress');
 
-// Initialize Option Buttons
 document.querySelectorAll('.option-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const type = btn.getAttribute('data-type');
@@ -108,18 +107,12 @@ startBtn.addEventListener('click', () => {
     }
     selectionData.age = document.getElementById('age-range').value;
     
-    // Select question bank
-    if (selectionData.age === '10s') {
-        currentQuestions = questionBanks.teen;
-    } else if (selectionData.age === '20s') {
-        currentQuestions = questionBanks.standard;
-    } else {
-        currentQuestions = questionBanks.mature;
-    }
+    if (selectionData.age === '10s') currentQuestions = questionBanks.teen;
+    else if (selectionData.age === '20s') currentQuestions = questionBanks.standard;
+    else currentQuestions = questionBanks.mature;
 
     userAnswers = new Array(currentQuestions.length).fill(null);
     currentPage = 0;
-    
     showPage('quiz-page');
     renderQuiz();
 });
@@ -131,9 +124,7 @@ function showPage(pageId) {
 
 function renderQuiz() {
     const startIndex = currentPage * 5;
-    const endIndex = startIndex + 5;
-    const questionsToShow = currentQuestions.slice(startIndex, endIndex);
-
+    const questionsToShow = currentQuestions.slice(startIndex, startIndex + 5);
     quizContainer.innerHTML = '';
     questionsToShow.forEach((q, i) => {
         const qIndex = startIndex + i;
@@ -142,16 +133,15 @@ function renderQuiz() {
         qElem.innerHTML = `
             <p>${qIndex + 1}. ${q}</p>
             <div class="answer-options">
-                <button class="answer-btn ${userAnswers[qIndex] === 0 ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, 0)">매우 아님</button>
-                <button class="answer-btn ${userAnswers[qIndex] === 1 ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, 1)">아님</button>
-                <button class="answer-btn ${userAnswers[qIndex] === 2 ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, 2)">보통</button>
-                <button class="answer-btn ${userAnswers[qIndex] === 3 ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, 3)">그렇다</button>
-                <button class="answer-btn ${userAnswers[qIndex] === 4 ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, 4)">매우 그렇다</button>
+                ${[0,1,2,3,4].map(s => `
+                    <button class="answer-btn ${userAnswers[qIndex] === s ? 'selected' : ''}" onclick="selectAnswer(${qIndex}, ${s})">
+                        ${['매우 아님','아님','보통','그렇다','매우 그렇다'][s]}
+                    </button>
+                `).join('')}
             </div>
         `;
         quizContainer.appendChild(qElem);
     });
-
     updateProgress();
     updateNextBtn();
 }
@@ -163,38 +153,58 @@ window.selectAnswer = (qIndex, score) => {
 
 function updateProgress() {
     const totalAnswered = userAnswers.filter(a => a !== null).length;
-    const percent = (totalAnswered / currentQuestions.length) * 100;
-    progress.style.width = `${percent}%`;
+    progress.style.width = `${(totalAnswered / currentQuestions.length) * 100}%`;
 }
 
 function updateNextBtn() {
     const startIndex = currentPage * 5;
-    const currentSectionAnswers = userAnswers.slice(startIndex, startIndex + 5);
-    const allAnswered = currentSectionAnswers.every(a => a !== null);
-    
+    const allAnswered = userAnswers.slice(startIndex, startIndex + 5).every(a => a !== null);
     nextBtn.disabled = !allAnswered;
-    if (currentPage === 3) {
-        nextBtn.innerText = '결과 확인하기';
-    } else {
-        nextBtn.innerText = `다음 (${currentPage + 1}/4)`;
-    }
+    nextBtn.innerText = currentPage === 3 ? '결과 확인하기' : `다음 (${currentPage + 1}/4)`;
 }
 
 nextBtn.addEventListener('click', () => {
-    if (currentPage < 3) {
-        currentPage++;
-        renderQuiz();
-        window.scrollTo(0, 0);
-    } else {
-        processResult();
-    }
+    if (currentPage < 3) { currentPage++; renderQuiz(); window.scrollTo(0, 0); }
+    else processResult();
 });
 
 function processResult() {
     showPage('loading-page');
-    setTimeout(() => {
-        calculateAndShowResult();
-    }, 5000);
+    setTimeout(calculateAndShowResult, 5000);
+}
+
+function generateMinimiSVG(gender, age, level, isTarget) {
+    // Colors based on gender/age
+    const skinColor = "#ffdbac";
+    const hairColor = age === '50s+' ? "#aaaaaa" : (age === '10s' ? "#000000" : "#4b2c20");
+    const shirtColor = gender === 'male' ? "#3498db" : "#e74c3c";
+    const pantsColor = gender === 'male' ? "#2c3e50" : "#f1c40f";
+    
+    // Emotion: Blush if level is high
+    const showBlush = level >= 5;
+    const smileType = level >= 5 ? "smile" : (level >= 3 ? "neutral" : "sad");
+
+    return `
+    <svg viewBox="0 0 32 48" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+        <!-- Body -->
+        <rect x="12" y="24" width="8" height="12" fill="${shirtColor}" />
+        <rect x="12" y="36" width="3" height="10" fill="${pantsColor}" />
+        <rect x="17" y="36" width="3" height="10" fill="${pantsColor}" />
+        <!-- Head -->
+        <rect x="10" y="8" width="12" height="16" fill="${skinColor}" />
+        <!-- Hair -->
+        <rect x="10" y="6" width="12" height="4" fill="${hairColor}" />
+        ${gender === 'female' ? `<rect x="8" y="10" width="2" height="14" fill="${hairColor}" /><rect x="22" y="10" width="2" height="14" fill="${hairColor}" />` : ''}
+        <!-- Eyes -->
+        <rect x="13" y="14" width="2" height="2" fill="#000" />
+        <rect x="17" y="14" width="2" height="2" fill="#000" />
+        <!-- Mouth -->
+        ${smileType === "smile" ? `<rect x="14" y="18" width="4" height="1" fill="#000" /><rect x="13" y="17" width="1" height="1" fill="#000" /><rect x="18" y="17" width="1" height="1" fill="#000" />` : 
+          smileType === "neutral" ? `<rect x="14" y="18" width="4" height="1" fill="#000" />` :
+          `<rect x="14" y="18" width="4" height="1" fill="#000" /><rect x="13" y="19" width="1" height="1" fill="#000" /><rect x="18" y="19" width="1" height="1" fill="#000" />`}
+        <!-- Blush -->
+        ${showBlush ? `<rect x="11" y="16" width="2" height="2" fill="#ff9999" opacity="0.6" /><rect x="19" y="16" width="2" height="2" fill="#ff9999" opacity="0.6" />` : ''}
+    </svg>`;
 }
 
 function calculateAndShowResult() {
@@ -212,37 +222,30 @@ function calculateAndShowResult() {
     else level = 0;
 
     const result = results[level];
-    
     document.getElementById('result-title').innerText = result.title;
     document.getElementById('result-level').innerText = `Lv. ${level}`;
     document.getElementById('result-desc').innerText = result.desc;
     document.getElementById('result-score').innerText = normalizedScore;
     document.getElementById('vibe-tip-text').innerText = result.tip;
     
-    // Result Scene Setup
     const scene = document.getElementById('result-scene');
-    scene.style.background = result.color;
+    scene.style.backgroundColor = result.color;
 
-    const mySeed = `my-${selectionData.myGender}-${selectionData.age}`;
-    const targetSeed = `target-${selectionData.targetGender}-${selectionData.age}-${level}`;
+    // Distances based on level
+    const distance = Math.max(0, (7 - level) * 15);
     
-    // Using Lorelei for very cute and expressive characters
-    const myAvatarUrl = `https://api.dicebear.com/7.x/lorelei/svg?seed=${mySeed}`;
-    const targetAvatarUrl = `https://api.dicebear.com/7.x/lorelei/svg?seed=${targetSeed}`;
-    
-    const heartIcon = level > 4 ? '❤️' : (level > 2 ? '❓' : '❄️');
-
     scene.innerHTML = `
-        <div class="vibe-badge">Today's Vibe</div>
-        <div class="heart-icon-overlay">${heartIcon}</div>
-        <div class="pixel-pair">
-            <div class="avatar-wrap">
-                <img src="${myAvatarUrl}" alt="나">
-                <span>나</span>
+        <div class="minimi-stage">
+            <div class="interaction-layer">
+                ${level >= 5 ? '<div class="floating-heart" style="left:50%; top:20%;">❤️</div>' : ''}
             </div>
-            <div class="avatar-wrap">
-                <img src="${targetAvatarUrl}" alt="그 사람">
-                <span>그 사람</span>
+            <div class="minimi-wrap" style="transform: translateX(-${distance}px)">
+                <div class="minimi-svg">${generateMinimiSVG(selectionData.myGender, selectionData.age, level, false)}</div>
+                <div class="minimi-name">나</div>
+            </div>
+            <div class="minimi-wrap" style="transform: translateX(${distance}px)">
+                <div class="minimi-svg">${generateMinimiSVG(selectionData.targetGender, selectionData.age, level, true)}</div>
+                <div class="minimi-name">그 사람</div>
             </div>
         </div>
     `;
@@ -251,8 +254,7 @@ function calculateAndShowResult() {
 }
 
 restartBtn.addEventListener('click', () => {
-    currentPage = 0;
-    userAnswers = [];
+    currentPage = 0; userAnswers = [];
     selectionData = { myGender: null, targetGender: null, age: '20s' };
     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
     showPage('landing-page');
