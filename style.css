@@ -188,34 +188,56 @@ header p {
 }
 
 .heart-loader {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
+    width: 72px;
+    height: 72px;
     position: relative;
-    transform: rotate(45deg);
-    animation: heartBeat 1.2s infinite;
+    display: grid;
+    place-items: center;
     margin-bottom: 30px;
+    color: var(--primary-color);
+    animation: heartBeat 1.2s infinite;
 }
 
-.heart-loader::before, .heart-loader::after {
+.heart-loader::before {
     content: '';
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
-    border-radius: 50%;
     position: absolute;
+    inset: 7px;
+    border: 3px solid #ffd6df;
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px #fff5f7;
 }
 
-.heart-loader::before { left: -25px; }
-.heart-loader::after { top: -25px; }
+.heart-loader::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    right: 8px;
+    top: 12px;
+    background: #ffd166;
+    box-shadow:
+        -48px 9px 0 #ff9fb1,
+        -10px 44px 0 #ff9fb1,
+        -38px 47px 0 #ffd166;
+}
+
+.heart-loader span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 4.2rem;
+    line-height: 1;
+    color: var(--primary-color);
+    text-shadow: 0 4px 0 rgba(255, 117, 140, .16);
+    transform: translateY(-2px);
+}
 
 @keyframes heartBeat {
-    0% { transform: rotate(45deg) scale(0.8); }
-    5% { transform: rotate(45deg) scale(0.9); }
-    10% { transform: rotate(45deg) scale(0.8); }
-    15% { transform: rotate(45deg) scale(1); }
-    50% { transform: rotate(45deg) scale(0.8); }
-    100% { transform: rotate(45deg) scale(0.8); }
+    0%, 45%, 100% { transform: scale(0.92); }
+    8% { transform: scale(1.04); }
+    16% { transform: scale(0.96); }
+    24% { transform: scale(1.1); }
 }
 
 /* Ad Slot */
